@@ -1,0 +1,1 @@
+﻿<%@ page language="C#" autoeventwireup="true" inherits="AjaxBookingPatientID, App_Web_f10pomdv" %>

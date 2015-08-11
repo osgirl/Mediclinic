@@ -1,0 +1,1 @@
+﻿<%@ page language="C#" autoeventwireup="true" inherits="HinxGen, App_Web_zn053kwx" %>
