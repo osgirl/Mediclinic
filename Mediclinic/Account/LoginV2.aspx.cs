@@ -128,6 +128,7 @@ public partial class LoginV2 : System.Web.UI.Page
                 Session["StaffFullnameWithoutMiddlename"]    = staff.Person.FullnameWithoutMiddlename;
                 Session["StaffFirstname"]                    = staff.Person.Firstname;
                 Session["NumDaysToDisplayOnBookingScreen"]   = staff.NumDaysToDisplayOnBookingScreen;
+                Session["HideBookingNotes"]                   = staff.HideBookingNotes;
                 Session["ShowOtherProvidersOnBookingScreen"] = false;
                 Session["ShowHeaderOnBookingScreen"]         = staff.ShowHeaderOnBookingScreen;
                 Session["SystemVariables"]                   = SystemVariableDB.GetAll();

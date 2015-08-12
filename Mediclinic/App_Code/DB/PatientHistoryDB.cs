@@ -111,6 +111,7 @@ public class PatientHistoryDB
                     staff.bk_screen_show_key as staff_bk_screen_show_key,
                     staff.enable_daily_reminder_sms as staff_enable_daily_reminder_sms, 
                     staff.enable_daily_reminder_email as staff_enable_daily_reminder_email,
+                    staff.hide_booking_notes as staff_hide_booking_notes,
 
                     " + PersonDB.GetFields("staff_person_", "staff_person") + @",
                     title_staff.title_id as title_staff_title_id, title_staff.descr as title_staff_descr

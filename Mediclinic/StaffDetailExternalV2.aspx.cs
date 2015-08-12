@@ -364,7 +364,7 @@ public partial class StaffDetailExternalV2 : System.Web.UI.Page
                            staff.IsContractor, staff.Tfn, staff.ProviderNumber,
                            ddlStatus.SelectedValue == "Inactive", staff.IsCommission, staff.CommissionPercent,
                            staff.IsStakeholder, staff.IsMasterAdmin, staff.IsAdmin, staff.IsPrincipal, staff.IsProvider, staff.IsExternal,
-                           GetStartDateFromForm(), GetEndDateFromForm(), txtComments.Text, staff.EnableDailyReminderSMS, staff.EnableDailyReminderEmail);
+                           GetStartDateFromForm(), GetEndDateFromForm(), txtComments.Text, staff.EnableDailyReminderSMS, staff.EnableDailyReminderEmail, staff.HideBookingNotes);
 
             if (!Convert.ToBoolean(ConfigurationManager.AppSettings["UseConfigDB"]) && staff.Login != txtLogin.Text)
             {
@@ -410,7 +410,7 @@ public partial class StaffDetailExternalV2 : System.Web.UI.Page
                                false, "", "",
                                ddlStatus.SelectedValue == "Inactive", false, 0,
                                false, false, false, false, false, true,
-                               GetStartDateFromForm(), GetEndDateFromForm(), txtComments.Text, false, false);
+                               GetStartDateFromForm(), GetEndDateFromForm(), txtComments.Text, false, false, false);
                 staff_added = true;
 
                 string url = Request.RawUrl;

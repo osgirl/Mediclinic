@@ -340,7 +340,7 @@ public partial class StaffListExternalV2 : System.Web.UI.Page
                        staff.IsContractor, staff.Tfn, staff.ProviderNumber,
                        ddlStatus.SelectedValue == "Inactive", staff.IsCommission, staff.CommissionPercent,
                        staff.IsStakeholder, staff.IsMasterAdmin, staff.IsAdmin, staff.IsPrincipal, staff.IsProvider, staff.IsExternal,
-                       row["start_date"] == DBNull.Value ? DateTime.MinValue : (DateTime)row["start_date"], row["end_date"] == DBNull.Value ? DateTime.MinValue : (DateTime)row["end_date"], row["comment"].ToString(), staff.EnableDailyReminderSMS, staff.EnableDailyReminderEmail);
+                       row["start_date"] == DBNull.Value ? DateTime.MinValue : (DateTime)row["start_date"], row["end_date"] == DBNull.Value ? DateTime.MinValue : (DateTime)row["end_date"], row["comment"].ToString(), staff.EnableDailyReminderSMS, staff.EnableDailyReminderEmail, staff.HideBookingNotes);
 
         if (!Convert.ToBoolean(ConfigurationManager.AppSettings["UseConfigDB"]) && staff.Login != txtLogin.Text)
         {
@@ -425,7 +425,7 @@ public partial class StaffListExternalV2 : System.Web.UI.Page
                                false, "", "",
                                ddlStatus.SelectedValue == "Inactive", false, 0,
                                false, false, false, false, false, true,
-                               DateTime.Today, DateTime.MinValue, "", false, false);
+                               DateTime.Today, DateTime.MinValue, "", false, false, false);
 
                 FillGrid();
             }

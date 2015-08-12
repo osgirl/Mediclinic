@@ -177,6 +177,8 @@ public class RegisterStaffDB
                          s.bk_screen_show_key,
                          s.enable_daily_reminder_sms, 
                          s.enable_daily_reminder_email,
+                         s.hide_booking_notes,
+
 
                          sr.field_id as field_field_id,sr.descr as field_descr,
 
@@ -211,6 +213,7 @@ public class RegisterStaffDB
                          s.bk_screen_show_key,
                          s.enable_daily_reminder_sms, 
                          s.enable_daily_reminder_email,
+                         s.hide_booking_notes,
 
                          sr.field_id as field_field_id,sr.descr as field_descr,
 
@@ -386,6 +389,7 @@ public class RegisterStaffDB
                         s.bk_screen_show_key as staff_bk_screen_show_key,
                         s.enable_daily_reminder_sms as staff_enable_daily_reminder_sms, 
                         s.enable_daily_reminder_email as staff_enable_daily_reminder_email,
+                        s.hide_booking_notes as staff_hide_booking_notes, 
 
 
                         " + PersonDB.GetFields("", "p").Replace("p.entity_id", "p.entity_id AS person_entity_id") + @", 
@@ -419,6 +423,7 @@ public class RegisterStaffDB
                          s.bk_screen_show_key,
                          s.enable_daily_reminder_sms, 
                          s.enable_daily_reminder_email,
+                         s.hide_booking_notes,
 
                          " + PersonDB.GetFields("", "p").Replace("p.entity_id", "p.entity_id AS person_entity_id") + @", 
                          t.title_id, t.descr

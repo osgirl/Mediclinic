@@ -164,7 +164,7 @@ public class BookingPatientOfferingDB
                         added_by.is_stakeholder as added_by_is_stakeholder, added_by.is_master_admin as added_by_is_master_admin, added_by.is_admin as added_by_is_admin, added_by.is_principal as added_by_is_principal, added_by.is_provider as added_by_is_provider, added_by.is_external as added_by_is_external,
                         added_by.staff_date_added as added_by_staff_date_added,added_by.start_date as added_by_start_date,added_by.end_date as added_by_end_date,added_by.comment as added_by_comment, 
                         added_by.num_days_to_display_on_booking_screen as added_by_num_days_to_display_on_booking_screen, added_by.show_header_on_booking_screen as added_by_show_header_on_booking_screen,
-                        added_by.bk_screen_field_id as added_by_bk_screen_field_id, added_by.bk_screen_show_key as added_by_bk_screen_show_key, added_by.enable_daily_reminder_sms as added_by_enable_daily_reminder_sms, added_by.enable_daily_reminder_email as added_by_enable_daily_reminder_email,
+                        added_by.bk_screen_field_id as added_by_bk_screen_field_id, added_by.bk_screen_show_key as added_by_bk_screen_show_key, added_by.enable_daily_reminder_sms as added_by_enable_daily_reminder_sms, added_by.enable_daily_reminder_email as added_by_enable_daily_reminder_email, added_by.hide_booking_notes as added_by_hide_booking_notes,
 
                         " + PersonDB.GetFields("added_by_person_", "added_by_person") + @",
                         title_added_by.title_id as title_added_by_title_id, title_added_by.descr as title_added_by_descr,
@@ -177,7 +177,7 @@ public class BookingPatientOfferingDB
                         deleted_by.is_stakeholder as deleted_by_is_stakeholder, deleted_by.is_master_admin as deleted_by_is_master_admin, deleted_by.is_admin as deleted_by_is_admin, deleted_by.is_principal as deleted_by_is_principal, deleted_by.is_provider as deleted_by_is_provider, deleted_by.is_external as deleted_by_is_external,
                         deleted_by.staff_date_added as deleted_by_staff_date_added,deleted_by.start_date as deleted_by_start_date,deleted_by.end_date as deleted_by_end_date,deleted_by.comment as deleted_by_comment, 
                         deleted_by.num_days_to_display_on_booking_screen as deleted_by_num_days_to_display_on_booking_screen, deleted_by.show_header_on_booking_screen as deleted_by_show_header_on_booking_screen, 
-                        deleted_by.bk_screen_field_id as deleted_by_bk_screen_field_id, deleted_by.bk_screen_show_key as deleted_by_bk_screen_show_key, deleted_by.enable_daily_reminder_sms as deleted_by_enable_daily_reminder_sms, deleted_by.enable_daily_reminder_email as deleted_by_enable_daily_reminder_email,
+                        deleted_by.bk_screen_field_id as deleted_by_bk_screen_field_id, deleted_by.bk_screen_show_key as deleted_by_bk_screen_show_key, deleted_by.enable_daily_reminder_sms as deleted_by_enable_daily_reminder_sms, deleted_by.enable_daily_reminder_email as deleted_by_enable_daily_reminder_email, deleted_by.hide_booking_notes as deleted_by_hide_booking_notes,
 
                         " + PersonDB.GetFields("deleted_by_person_", "deleted_by_person") + @",
                         title_deleted_by.title_id as title_deleted_by_title_id, title_deleted_by.descr as title_deleted_by_descr

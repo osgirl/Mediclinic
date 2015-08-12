@@ -283,22 +283,21 @@ public partial class PatientDetailV3 : System.Web.UI.Page
     protected void btnUpdateNotesIcon_Click(object sender, EventArgs e)
     {
         Patient patient = PatientDB.GetByID(GetFormID());
-        //lnkNotes.ImageUrl = NoteDB.HasNotes(patient.Person.EntityID) ? "~/images/notes-48.png" : "~/images/notes-bw-48.jpg";
-
         SetNotesList(patient);
     }
     protected void btnUpdateMedNotesIcon_Click(object sender, EventArgs e)
     {
         Patient patient = PatientDB.GetByID(GetFormID());
-        //lnkNotes.ImageUrl = NoteDB.HasNotes(patient.Person.EntityID) ? "~/images/notes-48.png" : "~/images/notes-bw-48.jpg";
-
         SetMedNotesList(patient);
+    }
+    protected void btnUpdateAllergiesIcon_Click(object sender, EventArgs e)
+    {
+        Patient patient = PatientDB.GetByID(GetFormID());
+        SetAllergiesList(patient);
     }
     protected void btnUpdateMedCondNotesIcon_Click(object sender, EventArgs e)
     {
         Patient patient = PatientDB.GetByID(GetFormID());
-        //lnkNotes.ImageUrl = NoteDB.HasNotes(patient.Person.EntityID) ? "~/images/notes-48.png" : "~/images/notes-bw-48.jpg";
-
         SetMedCondNotesList(patient);
     }
     protected void btnUpdateFlashingTextIcon_Click(object sender, EventArgs e)
@@ -335,8 +334,11 @@ public partial class PatientDetailV3 : System.Web.UI.Page
         DateTime startDate = txtStartDate.Text.Length == 0 ? DateTime.MinValue : Utilities.GetDate(txtStartDate.Text, "dd-mm-yyyy");
         DateTime endDate   = txtEndDate.Text.Length   == 0 ? DateTime.MinValue : Utilities.GetDate(txtEndDate.Text,   "dd-mm-yyyy");
 
-        UserView userView        = UserView.GetInstance();
-        int      loggedInStaffID = Session["StaffID"] == null ? -1 : Convert.ToInt32(Session["StaffID"]);
+        UserView userView           = UserView.GetInstance();
+        int      loggedInStaffID    = Session["StaffID"] == null ? -1 : Convert.ToInt32(Session["StaffID"]);
+        bool     hideBookingNotes   = Session["HideBookingNotes"]  == null ? true : Convert.ToBoolean(Session["HideBookingNotes"]);
+        bool     canSeeBookingNotes = userView.IsProviderView || (userView.IsAdminView && !hideBookingNotes);
+
 
         if (patient == null)
             patient = PatientDB.GetByID(GetFormID());
@@ -564,12 +566,12 @@ public partial class PatientDetailV3 : System.Web.UI.Page
 
             for (int i = 0; i < tblBookingList.Rows.Count; i++)
             {
-                tblBookingList.Rows[i]["show_invoice_row"]        = hasInvoiceRows              ? 1 : 0;
-                tblBookingList.Rows[i]["show_notes_row"]          = hasNotesRows                ? 1 : 0;
-                tblBookingList.Rows[i]["show_printletter_row"]    = hasPrintLetterRows          ? 1 : 0;
-                tblBookingList.Rows[i]["show_bookingsheet_row"]   = hasBookingSheetRows         ? 1 : 0;
-                tblBookingList.Rows[i]["show_outstanding_row"]    = hasOutstandingRows          ? 1 : 0;
-                tblBookingList.Rows[i]["show_change_history_row"] = changeHistoryHash.Count > 0 ? 1 : 0;
+                tblBookingList.Rows[i]["show_invoice_row"]        = !userView.IsExternalView && hasInvoiceRows              ? 1 : 0;
+                tblBookingList.Rows[i]["show_notes_row"]          = !userView.IsExternalView && canSeeBookingNotes && hasNotesRows       ? 1 : 0;
+                tblBookingList.Rows[i]["show_printletter_row"]    = !userView.IsExternalView && canSeeBookingNotes && hasPrintLetterRows ? 1 : 0;
+                tblBookingList.Rows[i]["show_bookingsheet_row"]   = hasBookingSheetRows                                     ? 1 : 0;
+                tblBookingList.Rows[i]["show_outstanding_row"]    = !userView.IsExternalView && hasOutstandingRows          ? 1 : 0;
+                tblBookingList.Rows[i]["show_change_history_row"] = !userView.IsExternalView && changeHistoryHash.Count > 0 ? 1 : 0;
 
                 int  booking_id   = Convert.ToInt32(tblBookingList.Rows[i]["booking_booking_id"]);
                 bool has_medicare = hashHasMedicareOrDVAInvoices[new Hashtable2D.Key(booking_id, -1)] != null && Convert.ToBoolean(hashHasMedicareOrDVAInvoices[new Hashtable2D.Key(booking_id, -1)]);
@@ -583,12 +585,13 @@ public partial class PatientDetailV3 : System.Web.UI.Page
             lstBookingList.DataSource = tblBookingList;
             lstBookingList.DataBind();
 
-            bk_list_show_invoice_row.Visible        = hasInvoiceRows;
-            bk_list_show_notes_row.Visible          = hasNotesRows;
-            bk_list_show_printletter_row.Visible    = hasPrintLetterRows;
+            bk_list_show_invoice_row.Visible        = !userView.IsExternalView && hasInvoiceRows;
+            bk_list_show_notes_text_row.Visible     = !userView.IsExternalView && canSeeBookingNotes && hasNotesRows;
+            bk_list_show_notes_row.Visible          = !userView.IsExternalView && canSeeBookingNotes && hasNotesRows;
+            bk_list_show_printletter_row.Visible    = !userView.IsExternalView && canSeeBookingNotes && hasPrintLetterRows;
             bk_list_show_bookingsheet_row.Visible   = hasBookingSheetRows;
-            bk_list_show_outstanding_row.Visible    = hasOutstandingRows;
-            bk_list_show_change_history_row.Visible = changeHistoryHash.Count > 0;
+            bk_list_show_outstanding_row.Visible    = !userView.IsExternalView && hasOutstandingRows;
+            bk_list_show_change_history_row.Visible = !userView.IsExternalView && changeHistoryHash.Count > 0;
         }
 
         return tblBookingList;
@@ -692,6 +695,17 @@ public partial class PatientDetailV3 : System.Web.UI.Page
     }
     protected void SetNotesList(Patient patient = null)
     {
+        UserView userView           = UserView.GetInstance();
+        bool     hideBookingNotes   = Session["HideBookingNotes"]  == null ? true : Convert.ToBoolean(Session["HideBookingNotes"]);
+        bool     canSeeBookingNotes = userView.IsProviderView || (userView.IsAdminView && !hideBookingNotes);
+        med_history_heading.Visible                = canSeeBookingNotes;
+        med_history_heading_trailing_space.Visible = canSeeBookingNotes;
+        pnlNotesList.Visible                       = canSeeBookingNotes;
+        med_history_trailing_space.Visible         = canSeeBookingNotes;
+        if (!canSeeBookingNotes)
+            return;
+
+
         if (patient == null)
             patient = PatientDB.GetByID(GetFormID());
 
@@ -706,11 +720,6 @@ public partial class PatientDetailV3 : System.Web.UI.Page
         lblNotesListCount.Text = "(" + tblNoteList.Rows.Count + ")";
         if (tblNoteList.Rows.Count == 0)
         {
-            //lblNotesList_NoRowsMessage.Visible = true;
-            //pnlNotesList.Visible = false;
-
-            lblNotesList_NoRowsMessage.Visible = false;
-
             lstNoteList.DataSource = tblNoteList;
             lstNoteList.DataBind();
             System.Web.UI.HtmlControls.HtmlTableRow lblEmptyData = lstNoteList.Controls[lstNoteList.Controls.Count - 1].Controls[0].FindControl("trEmptyData") as System.Web.UI.HtmlControls.HtmlTableRow;
@@ -720,9 +729,6 @@ public partial class PatientDetailV3 : System.Web.UI.Page
         }
         else
         {
-            lblNotesList_NoRowsMessage.Visible = false;
-            pnlNotesList.Visible = true;
-
             //tblBookingList.DefaultView.Sort = "booking_date_start DESC";
             lstNoteList.DataSource = tblNoteList;
             lstNoteList.DataBind();
@@ -764,11 +770,6 @@ public partial class PatientDetailV3 : System.Web.UI.Page
         lblMedNotesListCount.Text = "(" + tblMedNoteList.Rows.Count + ")";
         if (tblMedNoteList.Rows.Count == 0)
         {
-            //lblMedNotesList_NoRowsMessage.Visible = true;
-            //pnlMedNotesList.Visible = false;
-
-            lblMedNotesList_NoRowsMessage.Visible = false;
-
             lstMedNoteList.DataSource = tblMedNoteList;
             lstMedNoteList.DataBind();
             System.Web.UI.HtmlControls.HtmlTableRow lblEmptyData = lstMedNoteList.Controls[lstMedNoteList.Controls.Count - 1].Controls[0].FindControl("trEmptyData") as System.Web.UI.HtmlControls.HtmlTableRow;
@@ -778,9 +779,6 @@ public partial class PatientDetailV3 : System.Web.UI.Page
         }
         else
         {
-            lblMedNotesList_NoRowsMessage.Visible = false;
-            pnlMedNotesList.Visible = true;
-
             //tblBookingList.DefaultView.Sort = "booking_date_start DESC";
             lstMedNoteList.DataSource = tblMedNoteList;
             lstMedNoteList.DataBind();
@@ -794,6 +792,56 @@ public partial class PatientDetailV3 : System.Web.UI.Page
         int totalNoteLines = 0;
         for (int i = 0; i < tblMedNoteList.Rows.Count; i++)
             totalNoteLines += ((int)(NoteDB.Load(tblMedNoteList.Rows[i]).Text.Length / 70) + 1);
+
+        /*
+        if (totalNoteLines > 10)
+            pnlBookingsList.Style["max-height"] = "250px";
+        else if (totalNoteLines > 6)
+            pnlBookingsList.Style["max-height"] = "320px";
+        else if (totalNoteLines > 2)
+            pnlBookingsList.Style["max-height"] = "390px";
+        else
+            pnlBookingsList.Style["max-height"] = "470px";
+        */
+
+    }
+
+    protected void btnUpdateAllergiesList_Click(object sender, EventArgs e)
+    {
+        SetAllergiesList();
+    }
+    protected void SetAllergiesList(Patient patient = null)
+    {
+        if (patient == null)
+            patient = PatientDB.GetByID(GetFormID());
+
+        DataTable tblAllergiesList = NoteDB.GetDataTable_ByEntityID(patient.Person.EntityID, "5", -1, false);  // --------------------------------------------
+
+        lblAllergiesListCount.Text = "(" + tblAllergiesList.Rows.Count + ")";
+        if (tblAllergiesList.Rows.Count == 0)
+        {
+            lstAllergiesList.DataSource = tblAllergiesList;
+            lstAllergiesList.DataBind();
+            System.Web.UI.HtmlControls.HtmlTableRow lblEmptyData = lstAllergiesList.Controls[lstAllergiesList.Controls.Count - 1].Controls[0].FindControl("trEmptyData") as System.Web.UI.HtmlControls.HtmlTableRow;
+            lblEmptyData.Visible = true;
+            System.Web.UI.HtmlControls.HtmlTableCell tdEmptyData = lstAllergiesList.Controls[lstAllergiesList.Controls.Count - 1].Controls[0].FindControl("tdEmptyData") as System.Web.UI.HtmlControls.HtmlTableCell;
+            tdEmptyData.Attributes["colspan"] = "100%";
+        }
+        else
+        {
+            //tblBookingList.DefaultView.Sort = "booking_date_start DESC";
+            lstAllergiesList.DataSource = tblAllergiesList;
+            lstAllergiesList.DataBind();
+        }
+
+
+        //
+        // set booking list scroll panel max-height depending on size of notes list
+        //
+
+        int totalNoteLines = 0;
+        for (int i = 0; i < tblAllergiesList.Rows.Count; i++)
+            totalNoteLines += ((int)(NoteDB.Load(tblAllergiesList.Rows[i]).Text.Length / 70) + 1);
 
         /*
         if (totalNoteLines > 10)
@@ -890,16 +938,19 @@ public partial class PatientDetailV3 : System.Web.UI.Page
         string screen_id_body_chart  = "16";
         string screen_id_medications = "17";
         string screen_id_medical_conditions = "18";
+        string screen_id_allergies   = "20";
         string allFeatures = "dialogWidth:980px;dialogHeight:530;center:yes;resizable:no; scroll:no";
         string allFeaturesBodyChart = "dialogWidth:1200;dialogHeight:640;center:yes;resizable:no; scroll:no";
         string js          = "javascript:window.showModalDialog('" + "NoteListV2.aspx?id=" + patient.Person.EntityID.ToString() + "&screen=" + screen_id                    + "', '', '" + allFeatures          + "');document.getElementById('btnUpdateNotesIcon').click();return false;";
         string jsBodyChart = "javascript:window.showModalDialog('" + "NoteListV2.aspx?id=" + patient.Person.EntityID.ToString() + "&screen=" + screen_id_body_chart         + "', '', '" + allFeaturesBodyChart + "');document.getElementById('btnUpdateNotesIcon').click();return false;";
         string jsMed       = "javascript:window.showModalDialog('" + "NoteListV2.aspx?id=" + patient.Person.EntityID.ToString() + "&screen=" + screen_id_medications        + "', '', '" + allFeatures          + "');document.getElementById('btnUpdateMedNotesIcon').click();return false;";
         string jsMedCond   = "javascript:window.showModalDialog('" + "NoteListV2.aspx?id=" + patient.Person.EntityID.ToString() + "&screen=" + screen_id_medical_conditions + "', '', '" + allFeatures          + "');document.getElementById('btnUpdateMedCondNotesIcon').click();return false;";
+        string jsAllergies = "javascript:window.showModalDialog('" + "NoteListV2.aspx?id=" + patient.Person.EntityID.ToString() + "&screen=" + screen_id_allergies          + "', '', '" + allFeatures          + "');document.getElementById('btnUpdateAllergiesIcon').click();return false;";
         this.lnkNotes.Attributes["onclick"]          = js;
         this.lnkNotesBodyChart.Attributes["onclick"] = jsBodyChart;
         this.lnkMedNotes.Attributes["onclick"]       = jsMed;
         this.lnkMedCondNotes.Attributes["onclick"]   = jsMedCond;
+        this.lnkAllergies.Attributes["onclick"]      = jsAllergies;
 
 
         string allFeaturesFlashingText = "dialogWidth:525px;dialogHeight:255px;center:yes;resizable:no; scroll:no";
@@ -1204,6 +1255,7 @@ public partial class PatientDetailV3 : System.Web.UI.Page
         SetNotesList(patient);
         SetMedNotesList(patient);
         SetMedCondNotesList(patient);
+        SetAllergiesList(patient);
         GrdReferrals_FillGrid();
         GrdHealthCards_FillGrid();
 

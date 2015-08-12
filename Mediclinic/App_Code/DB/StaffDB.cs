@@ -22,7 +22,7 @@ public class StaffDB
                 throw;
         }
     }
-    public static int Insert(int person_id, string login, string pwd, int staff_position_id, int field_id, int costcentre_id, bool is_contractor, string tfn, string provider_number, bool is_fired, bool is_commission, decimal commission_percent, bool is_stakeholder, bool is_master_admin, bool is_admin, bool is_principal, bool is_provider, bool is_external, DateTime start_date, DateTime end_date, string comment, bool enable_daily_reminder_sms, bool enable_daily_reminder_email)
+    public static int Insert(int person_id, string login, string pwd, int staff_position_id, int field_id, int costcentre_id, bool is_contractor, string tfn, string provider_number, bool is_fired, bool is_commission, decimal commission_percent, bool is_stakeholder, bool is_master_admin, bool is_admin, bool is_principal, bool is_provider, bool is_external, DateTime start_date, DateTime end_date, string comment, bool enable_daily_reminder_sms, bool enable_daily_reminder_email, bool hide_booking_notes)
     {
         login = login.Replace("'", "''");
         pwd = pwd.Replace("'", "''");
@@ -33,19 +33,19 @@ public class StaffDB
         if (LoginExists(login))
             throw new UniqueConstraintException(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.Name);
 
-        string sql = "INSERT INTO Staff (person_id,login,pwd,staff_position_id,field_id,costcentre_id,is_contractor,tfn,provider_number,is_fired,is_commission,commission_percent,is_stakeholder,is_master_admin,is_admin,is_principal,is_provider,is_external,start_date,end_date,comment,enable_daily_reminder_sms,enable_daily_reminder_email) VALUES (" + "" + person_id + "," + "'" + login + "'," + "'" + pwd + "'," + "" + staff_position_id + "," + "" + field_id + "," + "" + costcentre_id + "," + (is_contractor ? "1," : "0,") + "'" + tfn + "'," + "UPPER('" + provider_number + "')," + (is_fired ? "1," : "0,") + (is_commission ? "1," : "0,") + "" + commission_percent + "," + (is_stakeholder ? "1," : "0,") + (is_master_admin ? "1," : "0,") + (is_admin ? "1," : "0,") + (is_principal ? "1," : "0,") + (is_provider ? "1," : "0,") + (is_external ? "1," : "0,") + (start_date == DateTime.MinValue ? "null" : "'" + start_date.ToString("yyyy-MM-dd HH:mm:ss") + "'") + "," + (end_date == DateTime.MinValue ? "null" : "'" + end_date.ToString("yyyy-MM-dd HH:mm:ss") + "'") + "," + "'" + comment + "'," + (enable_daily_reminder_sms ? "1" : "0") + "," + (enable_daily_reminder_email ? "1" : "0") + ");SELECT SCOPE_IDENTITY();";
+        string sql = "INSERT INTO Staff (person_id,login,pwd,staff_position_id,field_id,costcentre_id,is_contractor,tfn,provider_number,is_fired,is_commission,commission_percent,is_stakeholder,is_master_admin,is_admin,is_principal,is_provider,is_external,start_date,end_date,comment,enable_daily_reminder_sms,enable_daily_reminder_email,hide_booking_notes) VALUES (" + "" + person_id + "," + "'" + login + "'," + "'" + pwd + "'," + "" + staff_position_id + "," + "" + field_id + "," + "" + costcentre_id + "," + (is_contractor ? "1," : "0,") + "'" + tfn + "'," + "UPPER('" + provider_number + "')," + (is_fired ? "1," : "0,") + (is_commission ? "1," : "0,") + "" + commission_percent + "," + (is_stakeholder ? "1," : "0,") + (is_master_admin ? "1," : "0,") + (is_admin ? "1," : "0,") + (is_principal ? "1," : "0,") + (is_provider ? "1," : "0,") + (is_external ? "1," : "0,") + (start_date == DateTime.MinValue ? "null" : "'" + start_date.ToString("yyyy-MM-dd HH:mm:ss") + "'") + "," + (end_date == DateTime.MinValue ? "null" : "'" + end_date.ToString("yyyy-MM-dd HH:mm:ss") + "'") + "," + "'" + comment + "'," + (enable_daily_reminder_sms ? "1" : "0") + "," + (enable_daily_reminder_email ? "1" : "0") + "," + (hide_booking_notes ? "1" : "0") + ");SELECT SCOPE_IDENTITY();";
         int staff_id = Convert.ToInt32(DBBase.ExecuteSingleResult(sql));
         StaffOfferingsDB.InsertBulkByStaffID(staff_id, false, 0, false, 0, DateTime.Today);
         return staff_id;
     }
-    public static void Update(int staff_id, int person_id, string login, string pwd, int staff_position_id, int field_id, int costcentre_id, bool is_contractor, string tfn, string provider_number, bool is_fired, bool is_commission, decimal commission_percent, bool is_stakeholder, bool is_master_admin, bool is_admin, bool is_principal, bool is_provider, bool is_external, DateTime start_date, DateTime end_date, string comment, bool enable_daily_reminder_sms, bool enable_daily_reminder_email)
+    public static void Update(int staff_id, int person_id, string login, string pwd, int staff_position_id, int field_id, int costcentre_id, bool is_contractor, string tfn, string provider_number, bool is_fired, bool is_commission, decimal commission_percent, bool is_stakeholder, bool is_master_admin, bool is_admin, bool is_principal, bool is_provider, bool is_external, DateTime start_date, DateTime end_date, string comment, bool enable_daily_reminder_sms, bool enable_daily_reminder_email, bool hide_booking_notes)
     {
         login = login.Replace("'", "''");
         pwd = pwd.Replace("'", "''");
         tfn = tfn.Replace("'", "''");
         provider_number = provider_number.Replace("'", "''");
         comment = comment.Replace("'", "''");
-        string sql = "UPDATE Staff SET person_id = " + person_id + ",login = '" + login + "',pwd = '" + pwd + "',staff_position_id = " + staff_position_id + ",field_id = " + field_id + ",costcentre_id = " + costcentre_id + ",is_contractor = " + (is_contractor ? "1," : "0,") + "tfn = '" + tfn + "',provider_number = UPPER('" + provider_number + "'),is_fired = " + (is_fired ? "1," : "0,") + "is_commission = " + (is_commission ? "1," : "0,") + "commission_percent = " + commission_percent + ",is_stakeholder = " + (is_stakeholder ? "1" : "0") + ",is_master_admin = " + (is_master_admin ? "1" : "0") + ",is_admin = " + (is_admin ? "1" : "0") + ",is_principal = " + (is_principal ? "1" : "0") + ",is_provider = " + (is_provider ? "1" : "0") + ",is_external = " + (is_external ? "1" : "0") + ",start_date = " + (start_date == DateTime.MinValue ? "null" : "'" + start_date.ToString("yyyy-MM-dd HH:mm:ss") + "'") + ",end_date = " + (end_date == DateTime.MinValue ? "null" : "'" + end_date.ToString("yyyy-MM-dd HH:mm:ss") + "'") + ",comment = '" + comment + "'" + ",enable_daily_reminder_sms = " + (enable_daily_reminder_sms ? "1" : "0") + ",enable_daily_reminder_email = " + (enable_daily_reminder_email ? "1" : "0") + " WHERE staff_id = " + staff_id.ToString();
+        string sql = "UPDATE Staff SET person_id = " + person_id + ",login = '" + login + "',pwd = '" + pwd + "',staff_position_id = " + staff_position_id + ",field_id = " + field_id + ",costcentre_id = " + costcentre_id + ",is_contractor = " + (is_contractor ? "1," : "0,") + "tfn = '" + tfn + "',provider_number = UPPER('" + provider_number + "'),is_fired = " + (is_fired ? "1," : "0,") + "is_commission = " + (is_commission ? "1," : "0,") + "commission_percent = " + commission_percent + ",is_stakeholder = " + (is_stakeholder ? "1" : "0") + ",is_master_admin = " + (is_master_admin ? "1" : "0") + ",is_admin = " + (is_admin ? "1" : "0") + ",is_principal = " + (is_principal ? "1" : "0") + ",is_provider = " + (is_provider ? "1" : "0") + ",is_external = " + (is_external ? "1" : "0") + ",start_date = " + (start_date == DateTime.MinValue ? "null" : "'" + start_date.ToString("yyyy-MM-dd HH:mm:ss") + "'") + ",end_date = " + (end_date == DateTime.MinValue ? "null" : "'" + end_date.ToString("yyyy-MM-dd HH:mm:ss") + "'") + ",comment = '" + comment + "'" + ",enable_daily_reminder_sms = " + (enable_daily_reminder_sms ? "1" : "0") + ",enable_daily_reminder_email = " + (enable_daily_reminder_email ? "1" : "0") + ",hide_booking_notes = " + (hide_booking_notes ? "1" : "0") + " WHERE staff_id = " + staff_id.ToString();
         DBBase.ExecuteNonResult(sql);
     }
     public static void UpdatePwd(int staff_id, string pwd)
@@ -437,11 +437,12 @@ public class StaffDB
                 s.is_stakeholder as staff_is_stakeholder,s.is_master_admin as staff_is_master_admin,s.is_admin as staff_is_admin,s.is_principal as staff_is_principal,s.is_provider as staff_is_provider,s.is_external as staff_is_external,
                 s.staff_date_added as staff_staff_date_added,s.start_date as staff_start_date,s.end_date as staff_end_date,s.comment as staff_comment,
                 s.num_days_to_display_on_booking_screen as staff_num_days_to_display_on_booking_screen, 
-                s.show_header_on_booking_screen as staff_show_header_on_booking_screen,
-                s.bk_screen_field_id as staff_bk_screen_field_id, 
-                s.bk_screen_show_key as staff_bk_screen_show_key, 
-                s.enable_daily_reminder_sms as staff_enable_daily_reminder_sms, 
-                s.enable_daily_reminder_email as staff_enable_daily_reminder_email,
+                s.show_header_on_booking_screen         as staff_show_header_on_booking_screen,
+                s.bk_screen_field_id                    as staff_bk_screen_field_id, 
+                s.bk_screen_show_key                    as staff_bk_screen_show_key, 
+                s.enable_daily_reminder_sms             as staff_enable_daily_reminder_sms, 
+                s.enable_daily_reminder_email           as staff_enable_daily_reminder_email,
+                s.hide_booking_notes                    as staff_hide_booking_notes,
 
                 " + PersonDB.GetFields("person_", "p") + @", 
                 t.title_id as title_title_id, t.descr as title_descr,
@@ -464,7 +465,7 @@ public class StaffDB
         string sql = @"SELECT
                               s.staff_id as staff_id,login,pwd,pos.staff_position_id as staff_position_id,pos.descr as staff_position_descr,s.field_id as field_id,r.descr AS field_descr,c.costcentre_id as costcentre_id,c.descr AS costcentre_descr,is_contractor,tfn,provider_number,is_fired,is_commission,commission_percent,
                               is_stakeholder,is_master_admin,is_admin,is_principal,is_provider,is_external,
-                              s.staff_date_added,start_date,end_date,comment,num_days_to_display_on_booking_screen, show_header_on_booking_screen, bk_screen_field_id, bk_screen_show_key, enable_daily_reminder_sms, enable_daily_reminder_email,
+                              s.staff_date_added,start_date,end_date,comment,num_days_to_display_on_booking_screen, show_header_on_booking_screen, bk_screen_field_id, bk_screen_show_key, enable_daily_reminder_sms, enable_daily_reminder_email, hide_booking_notes,
 
                               " + PersonDB.GetFields("", "p") + @", p2.firstname AS added_by_firstname, 
                               t.title_id, t.descr,
@@ -613,16 +614,16 @@ public class StaffDB
     public static Staff Load(DataRow row, string prefix = "")
     {
         return new Staff(
-            Convert.ToInt32(row[prefix + "staff_id"]),
-            Convert.ToInt32(row[prefix + "person_id"]),
-            Convert.ToString(row[prefix + "login"]),
-            Convert.ToString(row[prefix + "pwd"]),
-            Convert.ToInt32(row[prefix + "staff_position_id"]),
-            Convert.ToInt32(row[prefix + "field_id"]),
-            Convert.ToInt32(row[prefix + "costcentre_id"]),
+            Convert.ToInt32(row[prefix   + "staff_id"]),
+            Convert.ToInt32(row[prefix   + "person_id"]),
+            Convert.ToString(row[prefix  + "login"]),
+            Convert.ToString(row[prefix  + "pwd"]),
+            Convert.ToInt32(row[prefix   + "staff_position_id"]),
+            Convert.ToInt32(row[prefix   + "field_id"]),
+            Convert.ToInt32(row[prefix   + "costcentre_id"]),
             Convert.ToBoolean(row[prefix + "is_contractor"]),
-            Convert.ToString(row[prefix + "tfn"]),
-            Convert.ToString(row[prefix + "provider_number"]),
+            Convert.ToString(row[prefix  + "tfn"]),
+            Convert.ToString(row[prefix  + "provider_number"]),
             Convert.ToBoolean(row[prefix + "is_fired"]),
             Convert.ToBoolean(row[prefix + "is_commission"]),
             Convert.ToDecimal(row[prefix + "commission_percent"]),
@@ -641,7 +642,8 @@ public class StaffDB
             row[prefix + "bk_screen_field_id"] == DBNull.Value ? -1 : Convert.ToInt32(row[prefix + "bk_screen_field_id"]),
             Convert.ToBoolean(row[prefix + "bk_screen_show_key"]),
             Convert.ToBoolean(row[prefix + "enable_daily_reminder_sms"]),
-            Convert.ToBoolean(row[prefix + "enable_daily_reminder_email"])
+            Convert.ToBoolean(row[prefix + "enable_daily_reminder_email"]),
+            Convert.ToBoolean(row[prefix + "hide_booking_notes"])
         );
     }
 

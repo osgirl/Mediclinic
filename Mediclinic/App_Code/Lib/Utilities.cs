@@ -382,6 +382,7 @@ public class Utilities
         HttpContext.Current.Session.Remove("StaffFullnameWithoutMiddlename");
         HttpContext.Current.Session.Remove("StaffFirstname");
         HttpContext.Current.Session.Remove("NumDaysToDisplayOnBookingScreen");
+        HttpContext.Current.Session.Remove("HideBookingNotes");
 
         HttpContext.Current.Session.Remove("ShowOtherProvidersOnBookingScreen");
         HttpContext.Current.Session.Remove("ShowHeaderOnBookingScreen");

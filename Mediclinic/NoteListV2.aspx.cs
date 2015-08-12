@@ -37,6 +37,8 @@ public partial class NoteListV2 : System.Web.UI.Page
                 if (IsValidFormScreen() && GetFormScreen() == 18)
                     lblHeading.Text = "Medical Conditions";
 
+                if (IsValidFormScreen() && GetFormScreen() == 20)
+                    lblHeading.Text = "Allergies";
 
                 bool IsMobileDevice = Utilities.IsMobileDevice(Request);
                 hiddenIsMobileDevice.Value = IsMobileDevice ? "1" : "0";
@@ -281,7 +283,7 @@ public partial class NoteListV2 : System.Web.UI.Page
         }
 
 
-        GrdNote.Columns[3].Visible = siteIsGP;
+        GrdNote.Columns[3].Visible = siteIsGP && GetFormScreen() == 6;
 
 
         Tuple<string, string, string, string> refsEmailInfo = GetReferrersEmail();
@@ -312,7 +314,7 @@ public partial class NoteListV2 : System.Web.UI.Page
         if (e.Row.RowType != DataControlRowType.Pager && !UserView.GetInstance().IsAdminView)
             e.Row.Cells[7].CssClass = "hiddencol";
 
-        if (e.Row.RowType != DataControlRowType.Pager && (IsValidFormScreen() && (GetFormScreen() == 16 || GetFormScreen() == 17 || GetFormScreen() == 18)))
+        if (e.Row.RowType != DataControlRowType.Pager && (IsValidFormScreen() && (GetFormScreen() == 16 || GetFormScreen() == 17 || GetFormScreen() == 18 || GetFormScreen() == 20)))
         {
             foreach (DataControlField col in GrdNote.Columns)
                 if (col.HeaderText.ToLower().Trim() == "type")
@@ -341,8 +343,10 @@ public partial class NoteListV2 : System.Web.UI.Page
             e.Row.Cells[6].Text = "Medication";
 
         if (IsValidFormScreen() && GetFormScreen() == 18 && e.Row.RowType == DataControlRowType.Header)
-            e.Row.Cells[7].Text = "Medical Condition";
+            e.Row.Cells[6].Text = "Medical Condition";
 
+        if (IsValidFormScreen() && GetFormScreen() == 20 && e.Row.RowType == DataControlRowType.Header)
+            e.Row.Cells[6].Text = "Allergy";
     }
     protected void GrdNote_RowDataBound(object sender, GridViewRowEventArgs e)
     {

@@ -273,9 +273,9 @@
                                     <td><asp:TextBox ID="txtPwd" runat="server" TextMode="Password" TabIndex="10" autocomplete="off"></asp:TextBox><asp:Label ID="lblPwd" runat="server" Font-Bold="True" Text="●●●●●●●●●"/></td>
                                     <td></td>
                                     <td></td>
-                                    <td class="nowrap"></td>
+                                    <td class="nowrap">Hide BK Notes</td>
                                     <td></td>
-                                    <td></td>
+                                    <td><asp:CheckBox ID="chkHideBKNotes" runat="server" Checked="true" TabIndex="26" /><asp:Label ID="lblHideBKNotes" runat="server" Font-Bold="True"/></td>
                                 </tr>
                                 <tr>
                                     <td></td>
@@ -284,9 +284,9 @@
                                     <td><asp:DropDownList ID="ddlField" runat="server" DataTextField="descr" DataValueField="field_id"  TabIndex="11"></asp:DropDownList><asp:Label ID="lblField" runat="server" Font-Bold="True"/></td>
                                     <td></td>
                                     <td></td>
-                                    <td class="nowrap">Provider</td>
+                                    <td class="nowrap"></td>
                                     <td></td>
-                                    <td><asp:CheckBox ID="chkIsProvider" runat="server" TabIndex="27" /><asp:Label ID="lblIsProvider" runat="server" Font-Bold="True"/></td>
+                                    <td></td>
                                 </tr>
                                 <tr>
                                     <td></td>
@@ -295,9 +295,9 @@
                                     <td><asp:CheckBox ID="chkContractor" runat="server" TabIndex="12" /><asp:Label ID="lblContractor" runat="server" Font-Bold="True"/></td>
                                     <td></td>
                                     <td></td>
-                                    <td class="nowrap">Principal</td>
+                                    <td class="nowrap">Provider</td>
                                     <td></td>
-                                    <td><asp:CheckBox ID="chkIsPrincipal" runat="server" TabIndex="28" /><asp:Label ID="lblIsPrincipal" runat="server" Font-Bold="True"/></td>
+                                    <td><asp:CheckBox ID="chkIsProvider" runat="server" TabIndex="27" /><asp:Label ID="lblIsProvider" runat="server" Font-Bold="True"/></td>
                                 </tr>
                                 <tr>
                                     <td></td>
@@ -306,9 +306,9 @@
                                     <td></td>
                                     <td></td>
                                     <td></td>
-                                    <td class="nowrap">Admin</td>
+                                    <td class="nowrap">Principal</td>
                                     <td></td>
-                                    <td><asp:CheckBox ID="chkIsAdmin" runat="server" TabIndex="29" /><asp:Label ID="lblIsAdmin" runat="server" Font-Bold="True"/></td>
+                                    <td><asp:CheckBox ID="chkIsPrincipal" runat="server" TabIndex="28" /><asp:Label ID="lblIsPrincipal" runat="server" Font-Bold="True"/></td>
                                 </tr>
                                 <tr>
                                     <td><asp:CustomValidator ID="ddlStartDateValidateAllOrNoneSet" runat="server"  CssClass="failureNotification"  
@@ -328,9 +328,9 @@
                                     </td>
                                     <td></td>
                                     <td></td>
-                                    <td class="nowrap"><asp:Label ID="lblMasterAdminText" runat="server">Master Admin</asp:Label></td>
+                                    <td class="nowrap">Admin</td>
                                     <td></td>
-                                    <td><asp:CheckBox ID="chkIsMasterAdmin" runat="server" TabIndex="30" /><asp:Label ID="lblIsMasterAdmin" runat="server" Font-Bold="True"/></td>
+                                    <td><asp:CheckBox ID="chkIsAdmin" runat="server" TabIndex="29" /><asp:Label ID="lblIsAdmin" runat="server" Font-Bold="True"/></td>
                                 </tr>
                                 <tr>
                                     <td><asp:CustomValidator ID="ddlEndDateValidateAllOrNoneSet" runat="server"  CssClass="failureNotification"  
@@ -350,9 +350,9 @@
                                     </td>
                                     <td></td>
                                     <td></td>
-                                    <td class="nowrap"><asp:Label ID="lblStakeholderText" runat="server">Stakeholder</asp:Label></td>
+                                    <td class="nowrap"><asp:Label ID="lblMasterAdminText" runat="server">Master Admin</asp:Label></td>
                                     <td></td>
-                                    <td><asp:CheckBox ID="chkIsStakeholder" runat="server" TabIndex="31" /><asp:Label ID="lblIsStakeholder" runat="server" Font-Bold="True"/></td>
+                                    <td><asp:CheckBox ID="chkIsMasterAdmin" runat="server" TabIndex="30" /><asp:Label ID="lblIsMasterAdmin" runat="server" Font-Bold="True"/></td>
                                 </tr>
                                 <tr>
                                     <td></td>
@@ -361,15 +361,26 @@
                                     <td><asp:Label ID="lblAddedBy" runat="server"></asp:Label></td>
                                     <td ></td>
                                     <td></td>
-                                    <td class="nowrap"></td>
+                                    <td class="nowrap"><asp:Label ID="lblStakeholderText" runat="server">Stakeholder</asp:Label></td>
                                     <td></td>
-                                    <td></td>
+                                    <td><asp:CheckBox ID="chkIsStakeholder" runat="server" TabIndex="31" /><asp:Label ID="lblIsStakeholder" runat="server" Font-Bold="True"/></td>
                                 </tr> 
                                 <tr>
                                     <td></td>
                                     <td class="nowrap"><asp:Label ID="lblStaffDateAddedText" runat="server">Date Added</asp:Label></td>
                                     <td></td>
                                     <td><asp:Label ID="lblStaffDateAdded" runat="server"></asp:Label></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td class="nowrap"></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td class="nowrap"></td>
+                                    <td></td>
+                                    <td></td>
                                     <td></td>
                                     <td></td>
                                     <td class="nowrap">Status</td>
@@ -382,6 +393,10 @@
                                         <asp:Label ID="lblIsFired" runat="server" Font-Bold="True"/>
                                     </td>
                                 </tr>
+
+
+
+
                                 <tr>
                                     <td colspan="9">
                                         <div style="height:25px;"></div>

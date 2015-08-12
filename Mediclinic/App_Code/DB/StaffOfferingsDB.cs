@@ -135,6 +135,7 @@ public class StaffOfferingsDB
                 s.bk_screen_show_key as staff_bk_screen_show_key, 
                 s.enable_daily_reminder_sms as staff_enable_daily_reminder_sms, 
                 s.enable_daily_reminder_email as staff_enable_daily_reminder_email,
+                s.hide_booking_notes as staff_hide_booking_notes,
 
                 " + PersonDB.GetFields("person_", "p") + @",
                 t.title_id as title_title_id, t.descr as title_descr,

@@ -126,7 +126,7 @@ public class OfferingOrderDB
                 staff.is_stakeholder as staff_is_stakeholder, staff.is_master_admin as staff_is_master_admin, staff.is_admin as staff_is_admin, staff.is_principal as staff_is_principal, staff.is_provider as staff_is_provider, staff.is_external as staff_is_external,
                 staff.staff_date_added as staff_staff_date_added, staff.start_date as staff_start_date, staff.end_date as staff_end_date, staff.comment as staff_comment, 
                 staff.num_days_to_display_on_booking_screen as staff_num_days_to_display_on_booking_screen,  staff.show_header_on_booking_screen as staff_show_header_on_booking_screen,
-                staff.bk_screen_field_id as staff_bk_screen_field_id, staff.bk_screen_show_key as staff_bk_screen_show_key, staff.enable_daily_reminder_sms as staff_enable_daily_reminder_sms, staff.enable_daily_reminder_email as staff_enable_daily_reminder_email
+                staff.bk_screen_field_id as staff_bk_screen_field_id, staff.bk_screen_show_key as staff_bk_screen_show_key, staff.enable_daily_reminder_sms as staff_enable_daily_reminder_sms, staff.enable_daily_reminder_email as staff_enable_daily_reminder_email, staff.hide_booking_notes as staff_hide_booking_notes
                 ,
                 " + PersonDB.GetFields("person_staff_", "person_staff") + @"
                 ,

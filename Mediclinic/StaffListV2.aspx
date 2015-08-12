@@ -491,6 +491,18 @@
                                 </FooterTemplate> 
                             </asp:TemplateField> 
 
+                            <asp:TemplateField HeaderText="Hide BK Notes" SortExpression="hide_booking_notes" FooterStyle-VerticalAlign="Top"> 
+                                <EditItemTemplate> 
+                                    <asp:CheckBox ID="chkHideBKNotes" runat="server" Checked='<%#Eval("hide_booking_notes").ToString()=="True"?true:false %>' />
+                                </EditItemTemplate> 
+                                <ItemTemplate> 
+                                    <asp:Label ID="lblHideBKNotes" runat="server" Text='<%# Eval("hide_booking_notes").ToString()=="True"?"Yes":"No" %>'></asp:Label> 
+                                </ItemTemplate> 
+                                <FooterTemplate> 
+                                    <asp:CheckBox ID="chkNewHideBKNotes" runat="server" />
+                                </FooterTemplate> 
+                            </asp:TemplateField> 
+
                             <asp:TemplateField HeaderText="Aged Care Prov Nbr" HeaderStyle-HorizontalAlign="Left" SortExpression="provider_number" FooterStyle-VerticalAlign="Top"> 
                                 <EditItemTemplate> 
                                     <asp:TextBox Width="90%" ID="txtProviderNumber" runat="server" Text='<%# Bind("provider_number") %>' onblur="provider_check(this);"></asp:TextBox> 

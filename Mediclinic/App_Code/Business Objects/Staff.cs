@@ -11,7 +11,8 @@ public class Staff
                 bool is_contractor, string tfn, string provider_number, bool is_fired, bool is_commission, decimal commission_percent,
                 bool is_stakeholder, bool is_master_admin, bool is_admin, bool is_principal, bool is_provider, bool is_external,
                 DateTime staff_date_added, DateTime start_date, DateTime end_date, string comment,
-                int num_days_to_display_on_booking_screen, bool show_header_on_booking_screen, int bk_screen_field_id, bool bk_screen_show_key, bool enable_daily_reminder_sms, bool enable_daily_reminder_email)
+                int num_days_to_display_on_booking_screen, bool show_header_on_booking_screen, int bk_screen_field_id, 
+                bool bk_screen_show_key, bool enable_daily_reminder_sms, bool enable_daily_reminder_email, bool hide_booking_notes)
     {
         this.staff_id                      = staff_id;
         this.person                        = new Person(person_id);
@@ -42,6 +43,7 @@ public class Staff
         this.bk_screen_show_key            = bk_screen_show_key;
         this.enable_daily_reminder_sms     = enable_daily_reminder_sms;
         this.enable_daily_reminder_email   = enable_daily_reminder_email;
+        this.hide_booking_notes            = hide_booking_notes;
 
     }
     public Staff(int staff_id)
@@ -224,7 +226,12 @@ public class Staff
         get { return this.enable_daily_reminder_email; }
         set { this.enable_daily_reminder_email = value; }
     }
-
+    private bool hide_booking_notes;
+    public bool HideBookingNotes
+    {
+        get { return this.hide_booking_notes; }
+        set { this.hide_booking_notes = value; }
+    }
 
 
     public override string ToString()

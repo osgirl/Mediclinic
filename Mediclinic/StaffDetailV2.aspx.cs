@@ -266,6 +266,7 @@ public partial class StaffDetailV2 : System.Web.UI.Page
             ddlStatus.SelectedValue        = staff.IsFired ? "Inactive" : "Active";
             chkSMSBKs.Checked              = staff.EnableDailyReminderSMS;
             chkEmailBKs.Checked            = staff.EnableDailyReminderEmail;
+            chkHideBKNotes.Checked         = staff.HideBookingNotes;
             //ddlCostCentre.SelectedValue    = staff.CostCentre.CostCentreID.ToString();
             txtProviderNumber.Text         = staff.ProviderNumber;
             chkIsCommission.Checked        = staff.IsCommission;
@@ -294,6 +295,7 @@ public partial class StaffDetailV2 : System.Web.UI.Page
             lblIsFired.Visible            = false;
             lblSMSBKs.Visible             = false;
             lblEmailBKs.Visible           = false;
+            lblHideBKNotes.Visible        = false;
             lblIsProvider.Visible         = false;
             lblIsPrincipal.Visible        = false;
             lblIsAdmin.Visible            = false;
@@ -319,6 +321,7 @@ public partial class StaffDetailV2 : System.Web.UI.Page
             lblIsFired.Text           = staff.IsFired       ? "<b><font color=\"red\">Inactive</font></b>" : "Active";
             lblSMSBKs.Text            = staff.EnableDailyReminderSMS   ? "Yes" : "No";
             lblEmailBKs.Text          = staff.EnableDailyReminderEmail ? "Yes" : "No";
+            lblHideBKNotes.Text       = staff.HideBookingNotes         ? "Yes" : "No";
 
             lblIsProvider.Text        = staff.IsProvider    ? "Yes" : "No";
             lblIsPrincipal.Text       = staff.IsPrincipal   ? "Yes" : "No";
@@ -362,6 +365,7 @@ public partial class StaffDetailV2 : System.Web.UI.Page
             ddlStatus.Visible            = false;
             chkSMSBKs.Visible            = false;
             chkEmailBKs.Visible          = false;
+            chkHideBKNotes.Visible       = false;
             //ddlCostCentre.Visible        = false;
             txtProviderNumber.Visible    = false;
             chkIsCommission.Visible      = false;
@@ -558,7 +562,7 @@ public partial class StaffDetailV2 : System.Web.UI.Page
                            chkContractor.Checked, txtTFN.Text, txtProviderNumber.Text.ToUpper(),
                            ddlStatus.SelectedValue == "Inactive", chkIsCommission.Checked, Convert.ToDecimal(txtCommissionPercent.Text),
                            setIsStakeholder, setIsMasterAdmin, chkIsAdmin.Checked, chkIsPrincipal.Checked, chkIsProvider.Checked, staff.IsExternal,
-                           GetStartDateFromForm(), GetEndDateFromForm(), txtComments.Text, chkSMSBKs.Checked, chkEmailBKs.Checked);
+                           GetStartDateFromForm(), GetEndDateFromForm(), txtComments.Text, chkSMSBKs.Checked, chkEmailBKs.Checked, chkHideBKNotes.Checked);
 
             if (!Convert.ToBoolean(ConfigurationManager.AppSettings["UseConfigDB"]) && staff.Login != txtLogin.Text)
             {
@@ -659,7 +663,7 @@ public partial class StaffDetailV2 : System.Web.UI.Page
                                chkContractor.Checked, txtTFN.Text, txtProviderNumber.Text.ToUpper(),
                                ddlStatus.SelectedValue == "Inactive", chkIsCommission.Checked, Convert.ToDecimal(txtCommissionPercent.Text),
                                setIsStakeholder, setIsMasterAdmin, chkIsAdmin.Checked, chkIsPrincipal.Checked, chkIsProvider.Checked, false,
-                               GetStartDateFromForm(), GetEndDateFromForm(), txtComments.Text, chkSMSBKs.Checked, chkEmailBKs.Checked);
+                               GetStartDateFromForm(), GetEndDateFromForm(), txtComments.Text, chkSMSBKs.Checked, chkEmailBKs.Checked, chkHideBKNotes.Checked);
                 staff_added = true;
 
                 string url = Request.RawUrl;

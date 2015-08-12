@@ -123,6 +123,7 @@ public class ReferralDB
                         added_or_last_modified_by.bk_screen_show_key as added_or_last_modified_by_bk_screen_show_key, 
                         added_or_last_modified_by.enable_daily_reminder_sms   as added_or_last_modified_by_enable_daily_reminder_sms, 
                         added_or_last_modified_by.enable_daily_reminder_email as added_or_last_modified_by_enable_daily_reminder_email, 
+                        added_or_last_modified_by.hide_booking_notes as added_or_last_modified_by_hide_booking_notes,
 
                         " + PersonDB.GetFields("person_added_or_last_modified_by_", "person_added_or_last_modified_by") + @",
                         title_added_or_last_modified_by.title_id as title_added_or_last_modified_by_title_id, title_added_or_last_modified_by.descr as title_added_or_last_modified_by_descr,
@@ -140,6 +141,7 @@ public class ReferralDB
                         deleted_by.bk_screen_show_key as deleted_by_bk_screen_show_key, 
                         deleted_by.enable_daily_reminder_sms   as deleted_by_enable_daily_reminder_sms, 
                         deleted_by.enable_daily_reminder_email as deleted_by_enable_daily_reminder_email, 
+                        deleted_by.hide_booking_notes as deleted_by_hide_booking_notes,
 
                         " + PersonDB.GetFields("person_deleted_by_", "person_deleted_by") + @",
                         title_deleted_by.title_id as title_deleted_by_title_id, title_deleted_by.descr as title_deleted_by_descr

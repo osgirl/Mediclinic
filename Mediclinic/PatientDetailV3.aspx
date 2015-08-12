@@ -619,7 +619,7 @@
                                                     <td>
                                                         <div style="height:10px;"></div>
 
-                                                        <table>
+                                                        <table id="med_history_heading" runat="server">
                                                             <tr>
                                                                 <td>
                                                                     <b>Medical History</b>&nbsp;<asp:Label ID="lblNotesListCount" runat="server"></asp:Label>
@@ -634,9 +634,7 @@
                                                             </tr>
                                                         </table>
                 
-                                                        <div style="height:10px;"></div>
-
-                                                        <asp:Label ID="lblNotesList_NoRowsMessage" runat="server" Text="No notes entered for this patient."></asp:Label>
+                                                        <div  id="med_history_heading_trailing_space" runat="server" style="height:10px;"></div>
 
                                                         <asp:Panel ID="pnlNotesList" runat="server" ScrollBars="Auto" style="max-height:250px;">
                                                             <table id="tblNotesList" border="1" style="border-collapse:collapse; width:100%;" class="table table-bordered table-grid table-grid-top-bottum-padding-normal auto_width block_center">
@@ -685,7 +683,7 @@
                                                         </asp:Panel>
 
 
-                                                        <br />
+                                                        <br id="med_history_trailing_space" runat="server" />
 
 
                                                         <table>
@@ -703,8 +701,6 @@
                                                         </table>
                 
                                                         <div style="height:10px;"></div>
-
-                                                        <asp:Label ID="lblMedNotesList_NoRowsMessage" runat="server" Text="No medications entered for this patient."></asp:Label>
 
                                                         <asp:Panel ID="pnlMedNotesList" runat="server" ScrollBars="Auto" style="max-height:250px;">
                                                             <table id="tblMedNotesList" border="1" style="border-collapse:collapse; width:100%;" class="table table-bordered table-grid table-grid-top-bottum-padding-normal auto_width block_center">
@@ -743,6 +739,74 @@
                                                             </asp:Repeater>
                                                             </table>
                                                         </asp:Panel>
+
+
+                                                        <br />
+
+
+                                                        <table>
+                                                            <tr>
+                                                                <td>
+                                                                    <b>Allergies</b>&nbsp;<asp:Label ID="lblAllergiesListCount" runat="server"></asp:Label>
+                                                                </td>
+                                                                <td style="min-width:20px;"></td>
+                                                                <td>
+                                                                    <asp:HyperLink ID="lnkAllergies" runat="server" ToolTip="Allergies" Text="Add/Edit Allergies" NavigateUrl="javascript:void(0)" />
+                                                                    &nbsp;&nbsp;
+                                                                    <asp:Button ID="btnUpdateAllergiesIcon" runat="server" CssClass="hiddencol" onclick="btnUpdateAllergiesIcon_Click" />
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                
+                                                        <div style="height:10px;"></div>
+
+                                                        <asp:Panel ID="pnlAllergiesList" runat="server" ScrollBars="Auto" style="max-height:250px;">
+                                                            <table id="tblAllergiesList" border="1" style="border-collapse:collapse; width:100%;" class="table table-bordered table-grid table-grid-top-bottum-padding-normal auto_width block_center">
+                                                                <tr>
+                                                                    <th class="nowrap hiddencol">Note ID</th>
+                                                                    <th class="nowrap hiddencol">Note Entity ID</th>
+                                                                    <th class="nowrap">Date Added</th>
+                                                                    <th style="width:99%;">Allergy</th>
+                                                                </tr>
+                                                            <asp:Repeater id="lstAllergiesList" runat="server">
+                                                                <HeaderTemplate>
+                                                                </HeaderTemplate>
+                                                                <ItemTemplate>
+                                                                    <tr style="vertical-align:top;">
+                                                                        <td class="nowrap hiddencol">
+                                                                            <asp:Label ID="lblNoteID"   Text='<%#  Eval("note_id") %>' runat="server"/>
+                                                                        </td>
+                                                                        <td class="nowrap hiddencol">
+                                                                            <asp:Label ID="lblNoteEntityID" Text='<%#  Eval("entity_id") %>' runat="server"/>
+                                                                        </td>
+                                                                        <td class="nowrap">
+                                                                            <asp:Label ID="lblNoteDateAdded" runat="server" Text='<%# Bind("date_added", "{0:dd-MM-yyyy}") %>' ></asp:Label> 
+                                                                        </td>
+                                                                        <td style="text-align:left; width:99%;">
+                                                                            <asp:Label ID="lblText" runat="server" Font-Bold="True" Text='<%#  (Eval("body_part_descr") == DBNull.Value || Eval("body_part_descr").ToString().Length == 0 ? "" : @"<u>" + Eval("body_part_descr") + "</u> : ")   +   (Eval("text") == DBNull.Value ? "" : ((string)Eval("text")).Replace("\n", "<br/>")) %>'></asp:Label> 
+                                                                        </td>
+                                                                    </tr>
+                                                                </ItemTemplate>
+                                                                <FooterTemplate>
+                                                                    <tr id="trEmptyData" runat="server" visible="false">
+                                                                        <td id="tdEmptyData" runat="server">
+                                                                            No Allergies entered for this patient.
+                                                                        </td>
+                                                                    </tr>
+                                                                </FooterTemplate>
+                                                            </asp:Repeater>
+                                                            </table>
+                                                        </asp:Panel>
+
+
+
+
+
+
+
+
+
+
 
 
                                                         <br />
@@ -1018,16 +1082,16 @@
                                                     
                                                             <table id="tblBookingsList" border="1" style="text-align:center;width:100%;" class="table table-bordered table-grid table-grid-top-bottum-padding-normal auto_width block_center" >
                                                                 <tr>
-                                                                    <th id="bk_list_show_outstanding_row" runat="server" Visible='<%# Eval("show_outstanding_row").ToString()=="1"?true:false %>'>Due</th>
+                                                                    <th id="bk_list_show_outstanding_row" runat="server">Due</th>
                                                                     <th>Date / Provider</th>
-                                                                    <th>Notes</th>
-                                                                    <th id="bk_list_show_notes_row" runat="server" Visible='<%# Eval("show_notes_row").ToString()=="1"?true:false %>'></th>
+                                                                    <th id="bk_list_show_notes_text_row" runat="server">Notes</th>
+                                                                    <th id="bk_list_show_notes_row" runat="server"></th>
                                                                     <th>Status</th>
                                                                     <th></th>
-                                                                    <th id="bk_list_show_change_history_row" runat="server" Visible='<%# Eval("show_change_history_row").ToString()=="1"?true:false %>'></th>
-                                                                    <th id="bk_list_show_printletter_row" runat="server" Visible='<%# Eval("show_printletter_row").ToString()=="1"?true:false %>'></th>
-                                                                    <th id="bk_list_show_invoice_row" runat="server" Visible='<%# Eval("show_invoice_row").ToString()=="1"?true:false %>'></th>
-                                                                    <th id="bk_list_show_bookingsheet_row" runat="server" Visible='<%# Eval("show_bookingsheet_row").ToString()=="1"?true:false %>'></th>
+                                                                    <th id="bk_list_show_change_history_row" runat="server"></th>
+                                                                    <th id="bk_list_show_printletter_row"    runat="server"></th>
+                                                                    <th id="bk_list_show_invoice_row"        runat="server"></th>
+                                                                    <th id="bk_list_show_bookingsheet_row"   runat="server"></th>
                                                                 </tr>
 
                                                             <asp:Repeater id="lstBookingList" runat="server">

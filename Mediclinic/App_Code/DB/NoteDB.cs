@@ -83,6 +83,7 @@ public class NoteDB
                     added_by.bk_screen_show_key as added_by_bk_screen_show_key, 
                     added_by.enable_daily_reminder_sms as added_by_enable_daily_reminder_sms, 
                     added_by.enable_daily_reminder_email as added_by_enable_daily_reminder_email,
+                    added_by.hide_booking_notes as added_by_hide_booking_notes,
 
 
                     " + PersonDB.GetFields("added_by_person_", "added_by_person") + @",
@@ -101,6 +102,7 @@ public class NoteDB
                     modified_by.bk_screen_show_key as modified_by_bk_screen_show_key, 
                     modified_by.enable_daily_reminder_sms   as modified_by_enable_daily_reminder_sms, 
                     modified_by.enable_daily_reminder_email as modified_by_enable_daily_reminder_email,
+                    modified_by.hide_booking_notes as modified_by_hide_booking_notes,
 
 
                     " + PersonDB.GetFields("modified_by_person_", "modified_by_person") + @",
@@ -119,6 +121,7 @@ public class NoteDB
                     deleted_by.bk_screen_show_key as deleted_by_bk_screen_show_key, 
                     deleted_by.enable_daily_reminder_sms   as deleted_by_enable_daily_reminder_sms, 
                     deleted_by.enable_daily_reminder_email as deleted_by_enable_daily_reminder_email,
+                    modified_by.hide_booking_notes as modified_by_hide_booking_notes,
 
 
                     " + PersonDB.GetFields("deleted_by_person_", "deleted_by_person") + @",

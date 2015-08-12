@@ -706,13 +706,16 @@ public partial class PatientDetailV2 : System.Web.UI.Page
             return null;
         }
         DateTime startDate = txtStartDate.Text.Length == 0 ? DateTime.MinValue : Utilities.GetDate(txtStartDate.Text, "dd-mm-yyyy");
-        DateTime endDate = txtEndDate.Text.Length == 0 ? DateTime.MinValue : Utilities.GetDate(txtEndDate.Text, "dd-mm-yyyy");
+        DateTime endDate   = txtEndDate.Text.Length   == 0 ? DateTime.MinValue : Utilities.GetDate(txtEndDate.Text,   "dd-mm-yyyy");
 
 
         bool isMobileDevice = Utilities.IsMobileDevice(Request);
 
-        UserView userView = UserView.GetInstance();
-        int loggedInStaffID = Session["StaffID"] == null ? -1 : Convert.ToInt32(Session["StaffID"]);
+        UserView userView           = UserView.GetInstance();
+        int      loggedInStaffID    = Session["StaffID"] == null ? -1 : Convert.ToInt32(Session["StaffID"]);
+        bool     hideBookingNotes   = Session["HideBookingNotes"]  == null ? true : Convert.ToBoolean(Session["HideBookingNotes"]);
+        bool     canSeeBookingNotes = userView.IsProviderView || (userView.IsAdminView && !hideBookingNotes);
+
 
 
         if (patient == null)
@@ -857,8 +860,7 @@ public partial class PatientDetailV2 : System.Web.UI.Page
             for (int i = 0; i < tblBookingList.Rows.Count; i++)
             {
                 Booking curBooking = BookingDB.LoadFull(tblBookingList.Rows[i]);
-                bool isDeleted     = curBooking.DateDeleted != DateTime.MinValue || curBooking.DeletedBy != null;
-
+                bool    isDeleted  = curBooking.DateDeleted != DateTime.MinValue || curBooking.DeletedBy != null;
 
                 if (!isDeleted)
                 {
@@ -1009,8 +1011,8 @@ public partial class PatientDetailV2 : System.Web.UI.Page
             for (int i = 0; i < tblBookingList.Rows.Count; i++)
             {
                 tblBookingList.Rows[i]["show_invoice_row"]        = !userView.IsExternalView && hasInvoiceRows              ? 1 : 0;
-                tblBookingList.Rows[i]["show_notes_row"]          = !userView.IsExternalView && hasNotesRows                ? 1 : 0;
-                tblBookingList.Rows[i]["show_printletter_row"]    = !userView.IsExternalView && hasPrintLetterRows          ? 1 : 0;
+                tblBookingList.Rows[i]["show_notes_row"]          = !userView.IsExternalView && canSeeBookingNotes && hasNotesRows       ? 1 : 0;
+                tblBookingList.Rows[i]["show_printletter_row"]    = !userView.IsExternalView && canSeeBookingNotes && hasPrintLetterRows ? 1 : 0;
                 tblBookingList.Rows[i]["show_bookingsheet_row"]   = hasBookingSheetRows                                     ? 1 : 0;
                 tblBookingList.Rows[i]["show_outstanding_row"]    = !userView.IsExternalView && hasOutstandingRows          ? 1 : 0;
                 tblBookingList.Rows[i]["show_change_history_row"] = !userView.IsExternalView && changeHistoryHash.Count > 0 ? 1 : 0;

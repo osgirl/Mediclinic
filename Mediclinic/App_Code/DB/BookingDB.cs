@@ -897,7 +897,7 @@ Mediclinic
                             provider.is_stakeholder as provider_is_stakeholder, provider.is_master_admin as provider_is_master_admin, provider.is_admin as provider_is_admin, provider.is_principal as provider_is_principal, provider.is_provider as provider_is_provider, provider.is_external as provider_is_external,
                             provider.staff_date_added as provider_staff_date_added, provider.start_date as provider_start_date, provider.end_date as provider_end_date, provider.comment as provider_comment, 
                             provider.num_days_to_display_on_booking_screen as provider_num_days_to_display_on_booking_screen,  provider.show_header_on_booking_screen as provider_show_header_on_booking_screen,
-                            provider.bk_screen_field_id as provider_bk_screen_field_id, provider.bk_screen_show_key as provider_bk_screen_show_key, provider.enable_daily_reminder_sms as provider_enable_daily_reminder_sms, provider.enable_daily_reminder_email as provider_enable_daily_reminder_email
+                            provider.bk_screen_field_id as provider_bk_screen_field_id, provider.bk_screen_show_key as provider_bk_screen_show_key, provider.enable_daily_reminder_sms as provider_enable_daily_reminder_sms, provider.enable_daily_reminder_email as provider_enable_daily_reminder_email, provider.hide_booking_notes as provider_hide_booking_notes
                             ,
                             " + PersonDB.GetFields("person_provider_", "person_provider") + @"
                             ,
@@ -934,7 +934,7 @@ Mediclinic
                             added_by.is_stakeholder as added_by_is_stakeholder, added_by.is_master_admin as added_by_is_master_admin, added_by.is_admin as added_by_is_admin, added_by.is_principal as added_by_is_principal, added_by.is_provider as added_by_is_provider, added_by.is_external as added_by_is_external,
                             added_by.staff_date_added as added_by_staff_date_added, added_by.start_date as added_by_start_date, added_by.end_date as added_by_end_date, added_by.comment as added_by_comment, 
                             added_by.num_days_to_display_on_booking_screen as added_by_num_days_to_display_on_booking_screen,  added_by.show_header_on_booking_screen as added_by_show_header_on_booking_screen,
-                            added_by.bk_screen_field_id as added_by_bk_screen_field_id, added_by.bk_screen_show_key as added_by_bk_screen_show_key, added_by.enable_daily_reminder_sms as added_by_enable_daily_reminder_sms, added_by.enable_daily_reminder_email as added_by_enable_daily_reminder_email
+                            added_by.bk_screen_field_id as added_by_bk_screen_field_id, added_by.bk_screen_show_key as added_by_bk_screen_show_key, added_by.enable_daily_reminder_sms as added_by_enable_daily_reminder_sms, added_by.enable_daily_reminder_email as added_by_enable_daily_reminder_email, added_by.hide_booking_notes as added_by_hide_booking_notes
                             ,
                             " + PersonDB.GetFields("person_added_by_", "person_added_by") + @"
                             ,
@@ -947,7 +947,7 @@ Mediclinic
                             confirmed_by.is_stakeholder as confirmed_by_is_stakeholder, confirmed_by.is_master_admin as confirmed_by_is_master_admin, confirmed_by.is_admin as confirmed_by_is_admin, confirmed_by.is_principal as confirmed_by_is_principal, confirmed_by.is_provider as confirmed_by_is_provider, confirmed_by.is_external as confirmed_by_is_external,
                             confirmed_by.staff_date_added as confirmed_by_staff_date_added, confirmed_by.start_date as confirmed_by_start_date, confirmed_by.end_date as confirmed_by_end_date, 
                             confirmed_by.comment as confirmed_by_comment, confirmed_by.num_days_to_display_on_booking_screen as confirmed_by_num_days_to_display_on_booking_screen,  confirmed_by.show_header_on_booking_screen as confirmed_by_show_header_on_booking_screen,
-                            confirmed_by.bk_screen_field_id as confirmed_by_bk_screen_field_id, confirmed_by.bk_screen_show_key as confirmed_by_bk_screen_show_key, confirmed_by.enable_daily_reminder_sms as confirmed_by_enable_daily_reminder_sms, confirmed_by.enable_daily_reminder_email as confirmed_by_enable_daily_reminder_email
+                            confirmed_by.bk_screen_field_id as confirmed_by_bk_screen_field_id, confirmed_by.bk_screen_show_key as confirmed_by_bk_screen_show_key, confirmed_by.enable_daily_reminder_sms as confirmed_by_enable_daily_reminder_sms, confirmed_by.enable_daily_reminder_email as confirmed_by_enable_daily_reminder_email, confirmed_by.hide_booking_notes as confirmed_by_hide_booking_notes
                             ,
                             " + PersonDB.GetFields("person_confirmed_by_", "person_confirmed_by") + @"
                             ,
@@ -960,7 +960,7 @@ Mediclinic
                             deleted_by.is_stakeholder as deleted_by_is_stakeholder, deleted_by.is_master_admin as deleted_by_is_master_admin, deleted_by.is_admin as deleted_by_is_admin, deleted_by.is_principal as deleted_by_is_principal, deleted_by.is_provider as deleted_by_is_provider, deleted_by.is_external as deleted_by_is_external,
                             deleted_by.staff_date_added as deleted_by_staff_date_added, deleted_by.start_date as deleted_by_start_date, deleted_by.end_date as deleted_by_end_date, deleted_by.comment as deleted_by_comment, 
                             deleted_by.num_days_to_display_on_booking_screen as deleted_by_num_days_to_display_on_booking_screen,  deleted_by.show_header_on_booking_screen as deleted_by_show_header_on_booking_screen,
-                            deleted_by.bk_screen_field_id as deleted_by_bk_screen_field_id, deleted_by.bk_screen_show_key as deleted_by_bk_screen_show_key, deleted_by.enable_daily_reminder_sms as deleted_by_enable_daily_reminder_sms, deleted_by.enable_daily_reminder_email as deleted_by_enable_daily_reminder_email
+                            deleted_by.bk_screen_field_id as deleted_by_bk_screen_field_id, deleted_by.bk_screen_show_key as deleted_by_bk_screen_show_key, deleted_by.enable_daily_reminder_sms as deleted_by_enable_daily_reminder_sms, deleted_by.enable_daily_reminder_email as deleted_by_enable_daily_reminder_email, deleted_by.hide_booking_notes as deleted_by_hide_booking_notes
                             ,
                             " + PersonDB.GetFields("person_deleted_by_", "person_deleted_by") + @"
                             ,
@@ -973,7 +973,7 @@ Mediclinic
                             cancelled_by.is_stakeholder as cancelled_by_is_stakeholder, cancelled_by.is_master_admin as cancelled_by_is_master_admin, cancelled_by.is_admin as cancelled_by_is_admin, cancelled_by.is_principal as cancelled_by_is_principal, cancelled_by.is_provider as cancelled_by_is_provider, cancelled_by.is_external as cancelled_by_is_external,
                             cancelled_by.staff_date_added as cancelled_by_staff_date_added, cancelled_by.start_date as cancelled_by_start_date, cancelled_by.end_date as cancelled_by_end_date, cancelled_by.comment as cancelled_by_comment, 
                             cancelled_by.num_days_to_display_on_booking_screen as cancelled_by_num_days_to_display_on_booking_screen,  cancelled_by.show_header_on_booking_screen as cancelled_by_show_header_on_booking_screen,
-                            cancelled_by.bk_screen_field_id as cancelled_by_bk_screen_field_id, cancelled_by.bk_screen_show_key as cancelled_by_bk_screen_show_key, cancelled_by.enable_daily_reminder_sms as cancelled_by_enable_daily_reminder_sms, cancelled_by.enable_daily_reminder_email as cancelled_by_enable_daily_reminder_email
+                            cancelled_by.bk_screen_field_id as cancelled_by_bk_screen_field_id, cancelled_by.bk_screen_show_key as cancelled_by_bk_screen_show_key, cancelled_by.enable_daily_reminder_sms as cancelled_by_enable_daily_reminder_sms, cancelled_by.enable_daily_reminder_email as cancelled_by_enable_daily_reminder_email, cancelled_by.hide_booking_notes as cancelled_by_hide_booking_notes
                             ,
                             " + PersonDB.GetFields("person_cancelled_by_", "person_cancelled_by") + @"
                             ,
@@ -1941,7 +1941,7 @@ Mediclinic
                         ReceiptStaff.is_stakeholder as receipt_staff_is_stakeholder,ReceiptStaff.is_master_admin as receipt_staff_is_master_admin,ReceiptStaff.is_admin as receipt_staff_is_admin,ReceiptStaff.is_principal as receipt_staff_is_principal,ReceiptStaff.is_provider as receipt_staff_is_provider, ReceiptStaff.is_external as receipt_staff_is_external,
                         ReceiptStaff.staff_date_added as receipt_staff_staff_date_added,ReceiptStaff.start_date as receipt_staff_start_date,ReceiptStaff.end_date as receipt_staff_end_date,ReceiptStaff.comment as receipt_staff_comment,
                         ReceiptStaff.num_days_to_display_on_booking_screen as receipt_staff_num_days_to_display_on_booking_screen,  ReceiptStaff.show_header_on_booking_screen as receipt_staff_show_header_on_booking_screen,
-                        ReceiptStaff.bk_screen_field_id as receipt_staff_bk_screen_field_id, ReceiptStaff.bk_screen_show_key as receipt_staff_bk_screen_show_key, ReceiptStaff.enable_daily_reminder_sms as receipt_staff_enable_daily_reminder_sms, ReceiptStaff.enable_daily_reminder_email as receipt_staff_enable_daily_reminder_email,
+                        ReceiptStaff.bk_screen_field_id as receipt_staff_bk_screen_field_id, ReceiptStaff.bk_screen_show_key as receipt_staff_bk_screen_show_key, ReceiptStaff.enable_daily_reminder_sms as receipt_staff_enable_daily_reminder_sms, ReceiptStaff.enable_daily_reminder_email as receipt_staff_enable_daily_reminder_email, ReceiptStaff.hide_booking_notes as receipt_staff_hide_booking_notes,
 
                         " + PersonDB.GetFields("receipt_staff_person_", "ReceiptStaffPerson") + @",
                         ReceiptStaffPersonTitle.title_id as receipt_staff_person_title_title_id, ReceiptStaffPersonTitle.descr as receipt_staff_person_title_descr,
@@ -1954,7 +1954,7 @@ Mediclinic
                         ReceiptReversedBy.is_stakeholder as receipt_reversed_by_is_stakeholder,ReceiptReversedBy.is_master_admin as receipt_reversed_by_is_master_admin,ReceiptReversedBy.is_admin as receipt_reversed_by_is_admin,ReceiptReversedBy.is_principal as receipt_reversed_by_is_principal,ReceiptReversedBy.is_provider as receipt_reversed_by_is_provider, ReceiptReversedBy.is_external as receipt_reversed_by_is_external,
                         ReceiptReversedBy.staff_date_added as receipt_reversed_by_staff_date_added,ReceiptReversedBy.start_date as receipt_reversed_by_start_date,ReceiptReversedBy.end_date as receipt_reversed_by_end_date,ReceiptReversedBy.comment as receipt_reversed_by_comment,
                         ReceiptReversedBy.num_days_to_display_on_booking_screen as receipt_reversed_by_num_days_to_display_on_booking_screen,  ReceiptReversedBy.show_header_on_booking_screen as receipt_reversed_by_show_header_on_booking_screen,
-                        ReceiptReversedBy.bk_screen_field_id as receipt_reversed_by_bk_screen_field_id, ReceiptReversedBy.bk_screen_show_key as receipt_reversed_by_bk_screen_show_key, ReceiptReversedBy.enable_daily_reminder_sms as receipt_reversed_by_enable_daily_reminder_sms, ReceiptReversedBy.enable_daily_reminder_email as receipt_reversed_by_enable_daily_reminder_email,
+                        ReceiptReversedBy.bk_screen_field_id as receipt_reversed_by_bk_screen_field_id, ReceiptReversedBy.bk_screen_show_key as receipt_reversed_by_bk_screen_show_key, ReceiptReversedBy.enable_daily_reminder_sms as receipt_reversed_by_enable_daily_reminder_sms, ReceiptReversedBy.enable_daily_reminder_email as receipt_reversed_by_enable_daily_reminder_email, ReceiptReversedBy.hide_booking_notes as receipt_reversed_by_hide_booking_notes,
 
                         " + PersonDB.GetFields("receipt_reversed_by_person_", "ReceiptReversedByPerson") + @",
                         ReceiptReversedByPersonTitle.title_id as receipt_reversed_by_person_title_title_id, ReceiptReversedByPersonTitle.descr as receipt_reversed_by_person_title_descr,

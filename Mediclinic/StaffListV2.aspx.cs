@@ -365,7 +365,9 @@ public partial class StaffListV2 : System.Web.UI.Page
         CheckBox     chkIsProvider        = (CheckBox)GrdStaff.Rows[e.RowIndex].FindControl("chkIsProvider");
         CheckBox     chkSMSBKs            = (CheckBox)GrdStaff.Rows[e.RowIndex].FindControl("chkSMSBKs");
         CheckBox     chkEmailBKs          = (CheckBox)GrdStaff.Rows[e.RowIndex].FindControl("chkEmailBKs");
+        CheckBox     chkHideBKNotes       = (CheckBox)GrdStaff.Rows[e.RowIndex].FindControl("chkHideBKNotes");
 
+        
 
         int staff_id  = Convert.ToInt32(lblId.Text);
         int person_id = GetPersonID(Convert.ToInt32(lblId.Text));
@@ -455,7 +457,7 @@ public partial class StaffListV2 : System.Web.UI.Page
                        chkContractor.Checked, txtTFN.Text, txtProviderNumber.Text.ToUpper(),
                        ddlStatus.SelectedValue == "Inactive", chkIsCommission.Checked, Convert.ToDecimal(txtCommissionPercent.Text),
                        chkIsStakeholder.Checked, chkIsMasterAdmin.Checked, chkIsAdmin.Checked, chkIsPrincipal.Checked, chkIsProvider.Checked, staff.IsExternal,
-                       row["start_date"] == DBNull.Value ? DateTime.MinValue : (DateTime)row["start_date"], row["end_date"] == DBNull.Value ? DateTime.MinValue : (DateTime)row["end_date"], row["comment"].ToString(), chkSMSBKs.Checked, chkEmailBKs.Checked);
+                       row["start_date"] == DBNull.Value ? DateTime.MinValue : (DateTime)row["start_date"], row["end_date"] == DBNull.Value ? DateTime.MinValue : (DateTime)row["end_date"], row["comment"].ToString(), chkSMSBKs.Checked, chkEmailBKs.Checked, chkHideBKNotes.Checked);
 
         if (!Convert.ToBoolean(ConfigurationManager.AppSettings["UseConfigDB"]) && staff.Login != txtLogin.Text)
         {
@@ -527,7 +529,9 @@ public partial class StaffListV2 : System.Web.UI.Page
             CheckBox     chkIsProvider        = (CheckBox)GrdStaff.FooterRow.FindControl("chkNewIsProvider");
             CheckBox     chkSMSBKs            = (CheckBox)GrdStaff.FooterRow.FindControl("chkNewSMSBKs");
             CheckBox     chkEmailBKs          = (CheckBox)GrdStaff.FooterRow.FindControl("chkNewEmailBKs");
+            CheckBox     chkHideBKNotes       = (CheckBox)GrdStaff.FooterRow.FindControl("chkNewHideBKNotes");
 
+            
 
             if (chkIsProvider.Checked && (StaffDB.GetCountOfProviders() >= Convert.ToInt32(SystemVariableDB.GetByDescr("MaxNbrProviders").Value)))
             {
@@ -572,7 +576,7 @@ public partial class StaffListV2 : System.Web.UI.Page
                                chkContractor.Checked, txtTFN.Text, txtProviderNumber.Text.ToUpper(),
                                ddlStatus.SelectedValue == "Inactive", chkIsCommission.Checked, Convert.ToDecimal(txtCommissionPercent.Text),
                                chkIsStakeholder.Checked, chkIsMasterAdmin.Checked, chkIsAdmin.Checked, chkIsPrincipal.Checked, chkIsProvider.Checked, false,
-                               DateTime.Today, DateTime.MinValue, "", chkSMSBKs.Checked, chkEmailBKs.Checked);
+                               DateTime.Today, DateTime.MinValue, "", chkSMSBKs.Checked, chkEmailBKs.Checked, chkHideBKNotes.Checked);
 
                 FillGrid();
             }

@@ -208,7 +208,8 @@ public class LetterPrintHistoryDB
                                 staff.bk_screen_field_id as staff_bk_screen_field_id,
                                 staff.bk_screen_show_key as staff_bk_screen_show_key,
                                 staff.enable_daily_reminder_sms as staff_enable_daily_reminder_sms, 
-                                staff.enable_daily_reminder_email as staff_enable_daily_reminder_email
+                                staff.enable_daily_reminder_email as staff_enable_daily_reminder_email,
+                                staff.hide_booking_notes as staff_hide_booking_notes
                                 ,
                                 " + PersonDB.GetFields("person_staff_", "person_staff") + @"
                                 ,

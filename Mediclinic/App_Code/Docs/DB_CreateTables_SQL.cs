@@ -1360,7 +1360,9 @@ CREATE TABLE Staff
  bk_screen_show_key          bit           not null DEFAULT 1,
 
  enable_daily_reminder_sms   bit           not null DEFAULT 1,
- enable_daily_reminder_email bit           not null DEFAULT 1
+ enable_daily_reminder_email bit           not null DEFAULT 1,
+
+ hide_booking_notes          bit           not null default 0
 );
 
 
@@ -5668,8 +5670,10 @@ VALUES
    (15,'Bookings'),
    (16,'Bookings - Body Chart'),
    (17,'Bookings - Medication'),
-   (18,'Bookings - Medical Condition');
-SSET IDENTITY_INSERT Screen OFF;
+   (18,'Bookings - Medical Condition'),
+   (19,'Bookings - Session Note'),
+   (20,'Bookings - Allergies');
+SET IDENTITY_INSERT Screen OFF;
 
 -------------------------------------------
 SELECT  *
@@ -5745,7 +5749,10 @@ VALUES
    (15, 252, 1),
 
    (17, 1,  1),
-   (18, 2,  1);
+   (18, 2,  1),
+   (19, 3,  1),
+   (19, 4,  2),
+   (20, 5,  1);
 
 -------------------------------------------
 SELECT   *

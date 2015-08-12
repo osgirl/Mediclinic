@@ -67,7 +67,7 @@ public class NoteHistoryDB
                     added_by.bk_screen_show_key as added_by_bk_screen_show_key, 
                     added_by.enable_daily_reminder_sms as added_by_enable_daily_reminder_sms, 
                     added_by.enable_daily_reminder_email as added_by_enable_daily_reminder_email,
-
+                    added_by.hide_booking_notes as added_by_hide_booking_notes,
 
                     " + PersonDB.GetFields("added_by_person_", "added_by_person") + @",
                     title_added_by.title_id as title_added_by_title_id, title_added_by.descr as title_added_by_descr,
@@ -85,7 +85,7 @@ public class NoteHistoryDB
                     modified_by.bk_screen_show_key as modified_by_bk_screen_show_key, 
                     modified_by.enable_daily_reminder_sms   as modified_by_enable_daily_reminder_sms, 
                     modified_by.enable_daily_reminder_email as modified_by_enable_daily_reminder_email,
-
+                    modified_by.hide_booking_notes as modified_by_hide_booking_notes,
 
                     " + PersonDB.GetFields("modified_by_person_", "modified_by_person") + @",
                     title_modified_by.title_id as title_modified_by_title_id, title_modified_by.descr as title_modified_by_descr,
@@ -103,7 +103,7 @@ public class NoteHistoryDB
                     deleted_by.bk_screen_show_key as deleted_by_bk_screen_show_key, 
                     deleted_by.enable_daily_reminder_sms   as deleted_by_enable_daily_reminder_sms, 
                     deleted_by.enable_daily_reminder_email as deleted_by_enable_daily_reminder_email,
-
+                    deleted_by.hide_booking_notes as deleted_by_hide_booking_notes,
 
                     " + PersonDB.GetFields("deleted_by_person_", "deleted_by_person") + @",
                     title_deleted_by.title_id as title_deleted_by_title_id, title_deleted_by.descr as title_deleted_by_descr,

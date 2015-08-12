@@ -95,7 +95,7 @@ public class CreditNoteDB
                                 s.is_stakeholder as staff_is_stakeholder,s.is_master_admin as staff_is_master_admin,s.is_admin as staff_is_admin,s.is_principal as staff_is_principal,s.is_provider as staff_is_provider, s.is_external as staff_is_external,
                                 s.staff_date_added as staff_staff_date_added,s.start_date as staff_start_date,s.end_date as staff_end_date,s.comment as staff_comment,
                                 s.num_days_to_display_on_booking_screen as staff_num_days_to_display_on_booking_screen, s.show_header_on_booking_screen as staff_show_header_on_booking_screen,
-                                s.bk_screen_field_id as staff_bk_screen_field_id, s.bk_screen_show_key as staff_bk_screen_show_key, s.enable_daily_reminder_sms as staff_enable_daily_reminder_sms, s.enable_daily_reminder_email as staff_enable_daily_reminder_email, 
+                                s.bk_screen_field_id as staff_bk_screen_field_id, s.bk_screen_show_key as staff_bk_screen_show_key, s.enable_daily_reminder_sms as staff_enable_daily_reminder_sms, s.enable_daily_reminder_email as staff_enable_daily_reminder_email, s.hide_booking_notes as staff_hide_booking_notes,
 
                                 " + PersonDB.GetFields("person_", "p") + @",
                                 t.title_id as title_title_id, t.descr as title_descr

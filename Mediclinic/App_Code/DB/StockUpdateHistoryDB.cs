@@ -91,6 +91,7 @@ public class StockUpdateHistoryDB
                             added_by.bk_screen_show_key as added_by_bk_screen_show_key,
                             added_by.enable_daily_reminder_sms as added_by_enable_daily_reminder_sms, 
                             added_by.enable_daily_reminder_email as added_by_enable_daily_reminder_email,
+                            added_by.hide_booking_notes as added_by_hide_booking_notes,
 
                             " + PersonDB.GetFields("person_added_by_", "person_added_by") + @",
                             title_added_by.title_id as title_added_by_title_id, title_added_by.descr as title_added_by_descr

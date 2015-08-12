@@ -448,6 +448,7 @@ public partial class SiteMasterV2 : System.Web.UI.MasterPage
         Session.Remove("StaffFullnameWithoutMiddlename");
         Session.Remove("StaffFirstname");
         Session.Remove("NumDaysToDisplayOnBookingScreen");
+        Session.Remove("HideBookingNotes"); 
         Session.Clear();
 
         //System.Web.Security.FormsAuthentication.SignOut();
