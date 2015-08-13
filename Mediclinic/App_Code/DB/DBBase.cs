@@ -10,13 +10,19 @@ public class DBBase
 
     public static string GetConnectionString(string DB = null)
     {
+        string machinename = System.Environment.MachineName;
+
         if (DB == null)
             DB = System.Web.HttpContext.Current.Session["DB"].ToString();
 
-        if (DB == "master")
-            return @"Server=.\SQLEXPRESS;Database=master;Integrated Security=SSPI;";
-        else
-            return @"Data Source=.\SQLEXPRESS;Initial Catalog=" + DB + @";Integrated Security=True;MultipleActiveResultSets=True";
+        if (DB == "master"){
+            if (String.Equals("NIKKO-MEDICLINI", machinename) ==  true) return @"Server=(local);Database=master;Integrated Security=SSPI;";
+            else return @"Server=.\SQLEXPRESS;Database=master;Integrated Security=SSPI;";
+        }
+        else{
+            if (String.Equals("NIKKO-MEDICLINI", machinename) == true) return @"Data Source=(local);Initial Catalog=" + DB + @";Integrated Security=True;MultipleActiveResultSets=True";
+            else return @"Data Source=.\SQLEXPRESS;Initial Catalog=" + DB + @";Integrated Security=True;MultipleActiveResultSets=True";
+        }
     }
 
     public static void ExecuteNonResult(string sql, string DB = null)
