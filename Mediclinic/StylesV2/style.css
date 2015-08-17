@@ -82,6 +82,7 @@ table.table-grid > tbody > tr > td { padding-right:10px; padding-left:10px; vert
 table.table-grid-left-right-padding-normal > tbody > tr > td { padding-left:2px !important; padding-right:2px !important;  }
 table.table-grid-top-bottum-padding-normal > tbody > tr > td { padding-top:1px !important; padding-bottom:0 !important; }
 table.table-grid-top-bottum-padding-thick  > tbody > tr > td { padding-top:4px !important; padding-bottom:5px !important; }
+table.table-grid-header-top-bottum-padding-thn   > tbody > tr > th { padding-top:3px !important; padding-bottom:3px !important; }
 table.vertical_align_top > tbody > tr > td { vertical-align:top !important; }
 
 

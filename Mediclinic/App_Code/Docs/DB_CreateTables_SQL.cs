@@ -7258,6 +7258,19 @@ CREATE TABLE PatientCondition
 */
 
 
+/* ReferrerAdditionalEmail
+
+CREATE TABLE ReferrerAdditionalEmail
+(
+ referrer_additional_email_id      int         not null PRIMARY KEY identity,
+ name                              varchar(50) not null,
+ email                             varchar(50) not null,
+ deleted_by                        int         FOREIGN KEY REFERENCES Staff(staff_id)  DEFAULT null,
+ date_deleted                      datetime    DEFAULT null,
+);
+
+*/
+
 
 /* BulkLetterSendingQueueBatch, BulkLetterSendingQueue
 

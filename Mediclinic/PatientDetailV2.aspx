@@ -880,6 +880,92 @@
                                             </tr>
                                         </table>
 
+                                        <div style="height:40px;"></div>
+
+                                        <center>
+
+                                            <b>Referrer Additional Emails</b>
+                                            <div style="line-height:4px;">&nbsp;</div>
+
+                                            <asp:GridView ID="GrdReferrerAdditionalEmails" runat="server" 
+                                                    AutoGenerateColumns="False" DataKeyNames="rae_referrer_additional_email_id" 
+                                                    OnRowCancelingEdit="GrdReferrerAdditionalEmails_RowCancelingEdit" 
+                                                    OnRowDataBound="GrdReferrerAdditionalEmails_RowDataBound" 
+                                                    OnRowEditing="GrdReferrerAdditionalEmails_RowEditing" 
+                                                    OnRowUpdating="GrdReferrerAdditionalEmails_RowUpdating" ShowFooter="True" ShowHeader="True" GridLines="None"
+                                                    OnRowCommand="GrdReferrerAdditionalEmails_RowCommand" 
+                                                    OnRowDeleting="GrdReferrerAdditionalEmails_RowDeleting" 
+                                                    OnRowCreated="GrdReferrerAdditionalEmails_RowCreated"
+                                                    OnSorting="GrdReferrerAdditionalEmails_Sorting" AllowSorting="True" 
+                                                    ClientIDMode="Predictable"
+                                                    CssClass="table table-bordered table-white table-grid table-grid-top-bottum-padding-normal table-grid-header-top-bottum-padding-thn auto_width vertical_align_top">
+
+                                                <Columns> 
+
+                                                    <asp:TemplateField HeaderText="ID"  HeaderStyle-HorizontalAlign="Left" SortExpression="rae_referrer_additional_email_id"> 
+                                                        <ItemTemplate> 
+                                                            <asp:Label ID="lblId" runat="server" Text='<%# Eval("rae_referrer_additional_email_id") %>'></asp:Label> 
+                                                        </ItemTemplate> 
+                                                        <EditItemTemplate> 
+                                                            <asp:Label ID="lblId" runat="server" Text='<%# Eval("rae_referrer_additional_email_id") %>'></asp:Label> 
+                                                        </EditItemTemplate> 
+                                                        <FooterTemplate> 
+                                                        </FooterTemplate> 
+                                                    </asp:TemplateField> 
+
+                                                    <asp:TemplateField HeaderText="Name" HeaderStyle-HorizontalAlign="Left" SortExpression="rae_name" FooterStyle-VerticalAlign="Top" ItemStyle-Wrap="false" ItemStyle-CssClass="text_left nowrap"> 
+                                                        <ItemTemplate> 
+                                                            <asp:Label ID="lblName" runat="server" Text='<%# Eval("rae_name") %>'></asp:Label> 
+                                                        </ItemTemplate> 
+                                                        <EditItemTemplate> 
+                                                            <asp:TextBox ID="txtName" runat="server" Text='<%# Eval("rae_name") %>' Columns="14"></asp:TextBox>
+                                                        </EditItemTemplate> 
+                                                        <FooterTemplate> 
+                                                            <asp:TextBox ID="txtNewName" runat="server" Columns="14"></asp:TextBox>
+                                                        </FooterTemplate> 
+                                                    </asp:TemplateField> 
+
+                                                    <asp:TemplateField HeaderText="Email" HeaderStyle-HorizontalAlign="Left" SortExpression="rae_email" FooterStyle-VerticalAlign="Top" ItemStyle-Wrap="false" ItemStyle-CssClass="text_left nowrap"> 
+                                                        <ItemTemplate> 
+                                                            <asp:Label ID="lblEmail" runat="server" Text='<%# Eval("rae_email") %>'></asp:Label> 
+                                                        </ItemTemplate> 
+                                                        <EditItemTemplate> 
+                                                            <asp:TextBox ID="txtemail" runat="server" Text='<%# Eval("rae_email") %>' Columns="16"></asp:TextBox>
+                                                        </EditItemTemplate> 
+                                                        <FooterTemplate> 
+                                                            <asp:TextBox ID="txtNewEmail" runat="server" Columns="16"></asp:TextBox>
+                                                        </FooterTemplate> 
+                                                    </asp:TemplateField> 
+
+                                                    <asp:TemplateField HeaderText="" ShowHeader="False" HeaderStyle-HorizontalAlign="Left" FooterStyle-VerticalAlign="Top"> 
+                                                        <EditItemTemplate> 
+                                                            <asp:LinkButton ID="lnkUpdate" runat="server" CausesValidation="True" CommandName="Update" Text="Update" ValidationGroup="EditHealthCardEPCRemainingValidationSummary"></asp:LinkButton> 
+                                                            <asp:LinkButton ID="lnkCancel" runat="server" CausesValidation="False" CommandName="Cancel" Text="Cancel"></asp:LinkButton> 
+                                                        </EditItemTemplate> 
+                                                        <FooterTemplate> 
+                                                            <asp:LinkButton ID="lnkAdd" runat="server" CausesValidation="True" CommandName="Insert" Text="Insert" ValidationGroup="AddHealthCardEPCRemainingValidationGroup"></asp:LinkButton> 
+                                                        </FooterTemplate> 
+                                                        <ItemTemplate> 
+                                                            <asp:LinkButton ID="lnkEdit" runat="server" CausesValidation="False" CommandName="Edit" Text="Edit"></asp:LinkButton> 
+                                                        </ItemTemplate> 
+                                                    </asp:TemplateField> 
+
+                                                    <asp:TemplateField HeaderText="" ShowHeader="True" HeaderStyle-HorizontalAlign="Left" FooterStyle-VerticalAlign="Top">
+                                                        <ItemTemplate>
+                                                            <asp:LinkButton ID="btnDelete" runat="server"  CommandName="_Delete" CommandArgument='<%# Bind("rae_referrer_additional_email_id") %>' Text="Del" AlternateText="Delete" ToolTip="Delete" />
+                                                        </ItemTemplate>
+                                                        <EditItemTemplate> 
+                                                        </EditItemTemplate> 
+                                                        <FooterTemplate> 
+                                                        </FooterTemplate> 
+                                                    </asp:TemplateField>
+
+                                                </Columns> 
+
+                                            </asp:GridView>
+
+                                        </center>
+
                                     </td>
 
                                     <td style="width:100px;min-width:25px;"></td>

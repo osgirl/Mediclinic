@@ -127,6 +127,48 @@
         // -------------------------------
 
 
+        function get_referrer_additional_emails(patient_id) {
+            var isMobileDevice = document.getElementById('hiddenIsMobileDevice').value == "1";
+            if (isMobileDevice)
+                open_new_tab('ReferrerAdditionalListPopupV2.aspx?pt='+patient_id);
+            else
+                window.showModalDialog("ReferrerAdditionalListPopupV2.aspx?pt="+patient_id, 'Show Popup Window', "dialogHeight:500px;dialogWidth:750px;resizable:yes;center:yes;");
+        }
+
+        function set_referrer_additional_emails(retVal) {
+
+            var currentEmails = document.getElementById('txtEmailTo').value;
+            var pattern = /;/ig;
+            currentEmails.replace(pattern, ",");
+            currentEmails = currentEmails.trim();
+
+            var currentEmailsList = currentEmails.length == 0 ? [] : currentEmails.split(',');
+            for (var i = 0; i < currentEmailsList.length; i++)
+                currentEmailsList[i] = currentEmailsList[i].trim();
+
+            var emails = retVal.split(',');
+            for (var i = 0; i < emails.length; i++)
+                if (currentEmailsList.indexOfCaseInsensitive(emails[i]) == -1)
+                    currentEmailsList.push(emails[i]);
+            document.getElementById('txtEmailTo').value = currentEmailsList.join(",");
+        }
+
+        if (!String.prototype.trim) {
+            String.prototype.trim = function () {
+                return this.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
+            };
+        }
+
+        if (!Array.prototype.indexOfCaseInsensitive) {
+            Array.prototype.indexOfCaseInsensitive = function (searchString) {
+                var len = this.length;
+                var str = searchString.toString().toLowerCase();
+                for (var i = 0; i < len; i++) {
+                    if (this[i].toLowerCase() == str) { return i; }
+                }
+                return -1;
+            };
+        }
 
     </script>
 </asp:Content>
@@ -135,6 +177,8 @@
     <div class="clearfix">
         <div class="page_title"><asp:Label ID="lblHeading" runat="server">Print A Letter</asp:Label></div>
         <div class="main_content" style="padding:20px 5px;">
+                
+            <asp:HiddenField ID="hiddenIsMobileDevice" runat="server" Value="0" />
 
             <div class="text-center">
                 <asp:ValidationSummary ID="ValidationSummary" runat="server" CssClass="failureNotification" ValidationGroup="ValidationSummary"/>
@@ -296,7 +340,7 @@
                                         <asp:CheckBox ID="chkUseDefaultDocs" runat="server" Text="Use Default Docs Instead Of Clinic Specific Docs" AutoPostBack="true" OnCheckedChanged="chkUseDefaultDocs_CheckedChanged" />
                                     </td>
                                 </tr>
-                                <tr>
+                                <tr style="vertical-align:top;">
                                     <td>Letter</td>
                                     <td></td>
                                     <td colspan="3"><asp:ListBox ID="lstLetters" runat="server" rows="34" SelectionMode="Single" style="min-width:325px;"></asp:ListBox></td>
@@ -342,10 +386,11 @@
                                                     To:
                                                 </td>
                                                 <td colspan="2">
-                                                    <asp:TextBox ID="txtEmailTo" Columns="53" runat="server" BackColor="LightGoldenrodYellow"></asp:TextBox>
+                                                    <asp:TextBox ID="txtEmailTo" Columns="42" runat="server" BackColor="LightGoldenrodYellow"></asp:TextBox>
 
-                                                    <asp:Button ID="btnPTEmail" runat="server" OnClick="btnPTEmail_Click" Text="PT" />
-                                                    <asp:Button ID="btnGPEmail" runat="server" OnClick="btnGPEmail_Click" Text="GP" />
+                                                    <asp:Button ID="btnPTEmail" runat="server" OnClick="btnPTEmail_Click"    Text="PT" />
+                                                    <asp:Button ID="btnGPEmail" runat="server" OnClick="btnGPEmail_Click"    Text="GP" />
+                                                    <asp:Button ID="btnOtherEmail" runat="server" OnClientClick="alert('No patient selected');return false;" Text="+Other" />
 
                                                 </td>
                                             </tr>

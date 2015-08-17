@@ -69,6 +69,8 @@ public partial class Letters_PrintV2 : System.Web.UI.Page
             if (bookingPatient.Booking.Organisation == null)
                 throw new CustomMessageException();
 
+            btnOtherEmail.OnClientClick = "javascript: get_referrer_additional_emails(" + bookingPatient.Patient.PatientID + ");return false;";
+
             // get selected id's
             ArrayList selectedIDs = new ArrayList();
             foreach (RepeaterItem item in lstNotes.Items)
@@ -136,6 +138,10 @@ public partial class Letters_PrintV2 : System.Web.UI.Page
             Booking booking = BookingDB.GetByID(Convert.ToInt32(booking_id));
             if (booking == null)
                 throw new CustomMessageException();
+
+            if (booking.Patient != null)
+                btnOtherEmail.OnClientClick = "javascript: get_referrer_additional_emails(" + booking.Patient.PatientID + ");return false;";
+
             if (booking.Patient == null)
             {
                 DataTable dt = BookingPatientDB.GetDataTable_ByBookingID(booking.BookingID);
@@ -239,6 +245,8 @@ public partial class Letters_PrintV2 : System.Web.UI.Page
     {
         UserView userView = UserView.GetInstance();
         lblOrganisationType.Text = !userView.IsAgedCareView ? "Clinic" : "Facility";
+
+        hiddenIsMobileDevice.Value = Utilities.IsMobileDevice(Request) ? "1" : "0";
     }
 
     protected void SetUrlFields()
@@ -274,6 +282,8 @@ public partial class Letters_PrintV2 : System.Web.UI.Page
                     Patient patient = PatientDB.GetByID(Convert.ToInt32(patient_id));
                     if (patient == null)
                         throw new CustomMessageException();
+
+                    btnOtherEmail.OnClientClick = "javascript: get_referrer_additional_emails(" + patient.PatientID + ");return false;";
 
                     txtUpdatePatientID.Text = patient.PatientID.ToString();
                     txtUpdatePatientName.Text = patient.Person.FullnameWithoutMiddlename;
