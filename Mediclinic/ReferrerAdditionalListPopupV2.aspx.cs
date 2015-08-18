@@ -24,7 +24,10 @@ public partial class ReferrerAdditionalListPopupV2 : System.Web.UI.Page
 
             if (!IsPostBack)
             {
-                FillGrdReferrerAdditionalEmails();
+                if (Convert.ToBoolean(Session["SiteIsGP"]))
+                    FillGrdReferreralEmails();
+                else
+                    FillGrdReferrerAdditionalEmails();
             }
         }
         catch (CustomMessageException ex)
@@ -63,9 +66,10 @@ public partial class ReferrerAdditionalListPopupV2 : System.Web.UI.Page
     {
         try
         {
+            GrdReferrerAdditionalEmails.Visible = true;
+
             Patient patient = PatientDB.GetByID(GetFormPTID());
             lblHeading.Text = "Referrer Additional Emails For " + patient.Person.FullnameWithoutMiddlename;
-
 
             DataTable dt = ReferrerAdditionalEmailDB.GetDataTable_ByPatient(patient.PatientID, false);
             dt.DefaultView.Sort = "rae_name ASC";
@@ -277,6 +281,164 @@ public partial class ReferrerAdditionalListPopupV2 : System.Web.UI.Page
 
             GrdReferrerAdditionalEmails.DataSource = dataView;
             GrdReferrerAdditionalEmails.DataBind();
+        }
+    }
+
+    #endregion
+
+    #region GrdReferreralEmails
+
+    protected void FillGrdReferreralEmails()
+    {
+        try
+        {
+            GrdReferreralEmails.Visible = true;
+
+            Patient patient = PatientDB.GetByID(GetFormPTID());
+            lblHeading.Text = "Referrer Emails For " + patient.Person.FullnameWithoutMiddlename;
+
+            DataTable dt = ReferralDB.GetDataTable(false, patient.PatientID);
+            dt.Columns.Add("email", typeof(String));
+
+            for (int i = dt.Rows.Count - 1; i >= 0; i--)
+            {
+                int orgEntityID = dt.Rows[i]["organisation_entity_id"] == DBNull.Value ? 0 : Convert.ToInt32(dt.Rows[i]["organisation_entity_id"]);
+                string[] emailsList = ContactAusDB.GetEmailsByEntityID(orgEntityID);
+
+                if (emailsList.Length > 0)
+                    dt.Rows[i]["email"] = string.Join(",", emailsList);
+                else
+                    dt.Rows.RemoveAt(i);
+            }
+            
+            ViewState["referreralemail_data"] = dt;
+
+
+            if (dt.Rows.Count > 0)
+            {
+                if (IsPostBack && ViewState["referreralemail_sortexpression"] != null && ViewState["referreralemail_sortexpression"].ToString().Length > 0)
+                {
+                    DataView dataView = new DataView(dt);
+                    dataView.Sort = ViewState["referreralemail_sortexpression"].ToString();
+                    GrdReferreralEmails.DataSource = dataView;
+                }
+                else
+                {
+                    GrdReferreralEmails.DataSource = dt;
+                }
+
+
+                GrdReferreralEmails.DataBind();
+
+            }
+            else
+            {
+                dt.Rows.Add(dt.NewRow());
+                GrdReferreralEmails.DataSource = dt;
+                GrdReferreralEmails.DataBind();
+
+                int TotalColumns = GrdReferreralEmails.Rows[0].Cells.Count;
+                GrdReferreralEmails.Rows[0].Cells.Clear();
+                GrdReferreralEmails.Rows[0].Cells.Add(new TableCell());
+                GrdReferreralEmails.Rows[0].Cells[0].ColumnSpan = TotalColumns;
+                GrdReferreralEmails.Rows[0].Cells[0].Text = "No Referrer Emails Exist";
+            }
+        }
+        catch (CustomMessageException ex)
+        {
+            SetErrorMessage(ex.ToString());
+        }
+        catch (Exception ex)
+        {
+            SetErrorMessage("", Utilities.IsDev() ? ex.ToString() : ex.Message);
+        }
+
+    }
+    protected void GrdReferreralEmails_RowCreated(object sender, GridViewRowEventArgs e)
+    {
+        if (e.Row.RowType != DataControlRowType.Pager)
+        {
+            //if (!Utilities.IsDev())
+                e.Row.Cells[0].CssClass = "hiddencol";
+        }
+    }
+    protected void GrdReferreralEmails_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        Patient patient = PatientDB.GetByID(GetFormPTID());
+        if (patient == null)
+        {
+            HideTableAndSetErrorMessage("");
+            return;
+        }
+
+        UserView userView = UserView.GetInstance();
+
+        DataTable dt = ViewState["referreralemail_data"] as DataTable;
+        bool tblEmpty = (dt.Rows.Count == 1 && dt.Rows[0][0] == DBNull.Value);
+        if (!tblEmpty && e.Row.RowType == DataControlRowType.DataRow)
+        {
+            Label lblId = (Label)e.Row.FindControl("lblId");
+            DataRow[] foundRows = dt.Select("register_referrer_id=" + lblId.Text);
+            DataRow thisRow = foundRows[0];
+
+
+
+            Utilities.AddConfirmationBox(e);
+            if ((e.Row.RowState & DataControlRowState.Edit) > 0)
+                Utilities.SetEditRowBackColour(e, System.Drawing.Color.LightGoldenrodYellow);
+        }
+        if (e.Row.RowType == DataControlRowType.Footer)
+        {
+        }
+    }
+    protected void GrdReferreralEmails_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
+    {
+        GrdReferreralEmails.EditIndex = -1;
+        FillGrdReferreralEmails();
+    }
+    protected void GrdReferreralEmails_RowUpdating(object sender, GridViewUpdateEventArgs e)
+    {
+    }
+    protected void GrdReferreralEmails_RowDeleting(object sender, GridViewDeleteEventArgs e)
+    {
+    }
+    protected void GrdReferreralEmails_RowCommand(object sender, GridViewCommandEventArgs e)
+    {
+    }
+    protected void GrdReferreralEmails_RowEditing(object sender, GridViewEditEventArgs e)
+    {
+        GrdReferreralEmails.EditIndex = e.NewEditIndex;
+        FillGrdReferreralEmails();
+    }
+    protected void GrdReferreralEmails_Sorting(object sender, GridViewSortEventArgs e)
+    {
+        // dont allow sorting if in edit mode
+        if (GrdReferreralEmails.EditIndex >= 0)
+            return;
+
+        SortReferreralEmails(e.SortExpression);
+    }
+    protected void SortReferreralEmails(string sortExpression, params string[] sortExpr)
+    {
+        DataTable dataTable = ViewState["referreralemail_data"] as DataTable;
+
+        if (dataTable != null)
+        {
+            if (ViewState["referreralemail_sortexpression"] == null)
+                ViewState["referreralemail_sortexpression"] = "";
+
+            DataView dataView = new DataView(dataTable);
+            string[] sortData = ViewState["referreralemail_sortexpression"].ToString().Trim().Split(' ');
+
+            string newSortExpr = (sortExpr.Length == 0) ?
+                (sortExpression == sortData[0] && sortData[1] == "ASC") ? "DESC" : "ASC" :
+                sortExpr[0];
+
+            dataView.Sort = sortExpression + " " + newSortExpr;
+            ViewState["referreralemail_sortexpression"] = sortExpression + " " + newSortExpr;
+
+            GrdReferreralEmails.DataSource = dataView;
+            GrdReferreralEmails.DataBind();
         }
     }
 

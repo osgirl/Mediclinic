@@ -30,7 +30,15 @@
             // asp:CheckBox control doesn't have a onchange event, and onchange event will be rendered in a <span> tag and not the <input> tag. 
             // so get parent, then get the control
 
-            var gvDrv = document.getElementById("<%= GrdReferrerAdditionalEmails.ClientID %>");
+            if (document.getElementById("<%= GrdReferrerAdditionalEmails.ClientID %>") != null)
+                highlight_row_in_grid(chkBox, document.getElementById("<%= GrdReferrerAdditionalEmails.ClientID %>"));
+            if (document.getElementById("<%= GrdReferreralEmails.ClientID %>") != null)
+                highlight_row_in_grid(chkBox, document.getElementById("<%= GrdReferreralEmails.ClientID %>"));
+        }
+
+        function highlight_row_in_grid(chkBox, gvDrv) {  // doesnt pass in a checkbox -- read first comment below
+            // asp:CheckBox control doesn't have a onchange event, and onchange event will be rendered in a <span> tag and not the <input> tag. 
+            // so get parent, then get the control
 
             for (i = 1; i < gvDrv.rows.length; i++) {
 
@@ -66,9 +74,21 @@
 
         function get_selected() {
 
+            var emails1 = document.getElementById("<%= GrdReferrerAdditionalEmails.ClientID %>") == null ? "" : get_selected_by_grid(document.getElementById("<%= GrdReferrerAdditionalEmails.ClientID %>"));
+            var emails2 = document.getElementById("<%= GrdReferreralEmails.ClientID %>")         == null ? "" : get_selected_by_grid(document.getElementById("<%= GrdReferreralEmails.ClientID %>"));
+
+            if (emails1.length == 0)
+                return emails2;
+            else if (emails2.length == 0)
+                return emails1;
+            else
+                return emails1 + "," + emails2;
+        }
+
+        function get_selected_by_grid(gvDrv) {
+
             var selected = "";
 
-            var gvDrv = document.getElementById("<%= GrdReferrerAdditionalEmails.ClientID %>");
             for (i = 1; i < gvDrv.rows.length; i++) {
 
                 var cells = gvDrv.rows[i].cells;
@@ -77,8 +97,8 @@
 
                     if (HTML.indexOf("chkSelect") != -1) {
                         var lblID = cells[0].getElementsByTagName("*")[0];
-                        var lblName   = cells[1].getElementsByTagName("*")[0];
-                        var lblEmail  = cells[2].getElementsByTagName("*")[0];
+                        var lblName = cells[1].getElementsByTagName("*")[0];
+                        var lblEmail = cells[2].getElementsByTagName("*")[0];
                         var chkSelect = cells[j].getElementsByTagName("*")[1];  // first item is the onchange event rendered as a div, so get 2nd item
 
                         if (chkSelect.checked)
@@ -90,10 +110,18 @@
             return selected;
         }
 
-        function checkAll(AllCheckboxes) {
+        function checkAll_ReferrerAdditionalEmails(AllCheckboxes) {
             var GridVwHeaderChckbox = document.getElementById("<%= GrdReferrerAdditionalEmails.ClientID %>");
             for (i = 1; i < GridVwHeaderChckbox.rows.length; i++) {
                 var curChkBox = GridVwHeaderChckbox.rows[i].cells[5].getElementsByTagName("INPUT")[0];
+                curChkBox.checked = AllCheckboxes.checked;
+                highlight_row(curChkBox.parentNode);
+            }
+        }
+        function checkAll_ReferreralEmails(AllCheckboxes) {
+            var GridVwHeaderChckbox = document.getElementById("<%= GrdReferreralEmails.ClientID %>");
+            for (i = 1; i < GridVwHeaderChckbox.rows.length; i++) {
+                var curChkBox = GridVwHeaderChckbox.rows[i].cells[3].getElementsByTagName("INPUT")[0];
                 curChkBox.checked = AllCheckboxes.checked;
                 highlight_row(curChkBox.parentNode);
             }
@@ -207,7 +235,54 @@
 
                             <asp:TemplateField HeaderText="Select" HeaderStyle-HorizontalAlign="Left" FooterStyle-VerticalAlign="Top" ItemStyle-HorizontalAlign="Center"> 
                                 <HeaderTemplate>
-                                    <asp:CheckBox ID="chkSelectAll" runat="server" onclick="checkAll(this);" />
+                                    <asp:CheckBox ID="chkSelectAll" runat="server" onclick="checkAll_ReferrerAdditionalEmails(this);" />
+                                </HeaderTemplate>
+                                <ItemTemplate>
+                                    <asp:CheckBox ID="chkSelect" runat="server" Text="" onchange="highlight_row(this);" />
+                                </ItemTemplate> 
+                            </asp:TemplateField> 
+
+                        </Columns> 
+
+                    </asp:GridView>
+
+                <asp:GridView ID="GrdReferreralEmails" runat="server" 
+                        AutoGenerateColumns="False" DataKeyNames="register_referrer_id" 
+                        OnRowCancelingEdit="GrdReferreralEmails_RowCancelingEdit" 
+                        OnRowDataBound="GrdReferreralEmails_RowDataBound" 
+                        OnRowEditing="GrdReferreralEmails_RowEditing" 
+                        OnRowUpdating="GrdReferreralEmails_RowUpdating" ShowFooter="False" ShowHeader="True"
+                        OnRowCommand="GrdReferreralEmails_RowCommand" 
+                        OnRowDeleting="GrdReferreralEmails_RowDeleting" 
+                        OnRowCreated="GrdReferreralEmails_RowCreated"
+                        OnSorting="GrdReferreralEmails_Sorting" AllowSorting="True" 
+                        AllowPaging="False"
+                        ClientIDMode="Predictable"
+                        CssClass="table table-bordered table-striped table-grid table-grid-top-bottum-padding-normal auto_width block_center">
+
+                        <Columns> 
+
+                            <asp:TemplateField HeaderText="ID"  HeaderStyle-HorizontalAlign="Left" SortExpression="register_referrer_id"> 
+                                <ItemTemplate> 
+                                    <asp:Label ID="lblId" runat="server" Text='<%# Eval("register_referrer_id") %>'></asp:Label> 
+                                </ItemTemplate> 
+                            </asp:TemplateField> 
+
+                            <asp:TemplateField HeaderText="Name" HeaderStyle-HorizontalAlign="Left" SortExpression="referrer_person__firstname, referrer_person_surname" FooterStyle-VerticalAlign="Top" ItemStyle-Wrap="false" ItemStyle-CssClass="text_left nowrap"> 
+                                <ItemTemplate> 
+                                    <asp:Label ID="lblName" runat="server" Text='<%# Eval("referrer_person_firstname") + " " + Eval("referrer_person_surname")  %>'></asp:Label> 
+                                </ItemTemplate> 
+                            </asp:TemplateField> 
+
+                            <asp:TemplateField HeaderText="Email" HeaderStyle-HorizontalAlign="Left" SortExpression="email" FooterStyle-VerticalAlign="Top" ItemStyle-Wrap="false" ItemStyle-CssClass="text_left nowrap"> 
+                                <ItemTemplate> 
+                                    <asp:Label ID="lblEmail" runat="server" Text='<%# Eval("email") %>'></asp:Label> 
+                                </ItemTemplate> 
+                            </asp:TemplateField> 
+
+                            <asp:TemplateField HeaderText="Select" HeaderStyle-HorizontalAlign="Left" FooterStyle-VerticalAlign="Top" ItemStyle-HorizontalAlign="Center"> 
+                                <HeaderTemplate>
+                                    <asp:CheckBox ID="chkSelectAll" runat="server" onclick="checkAll_ReferreralEmails(this);" />
                                 </HeaderTemplate>
                                 <ItemTemplate>
                                     <asp:CheckBox ID="chkSelect" runat="server" Text="" onchange="highlight_row(this);" />
