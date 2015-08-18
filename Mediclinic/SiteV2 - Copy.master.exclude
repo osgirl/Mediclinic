@@ -1,4 +1,4 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="SiteV2.master.cs" Inherits="SiteMasterV2" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="SiteBlank.master.cs" Inherits="SiteBlank" %>
 
 <!DOCTYPE html>
 
@@ -7,7 +7,7 @@
     <title></title>
 
     <meta charset="utf-8" />
-    <%--<link href="/StylesV2/bootstrap.min.css" rel="stylesheet" />--%>
+    <link href="/StylesV2/bootstrap.min.css" rel="stylesheet" />
     <link href="/StylesV2/bootstrap.css" rel="stylesheet" />
     <link href="/Styles/date_picker.css" rel="stylesheet" type="text/css" />
     <link href="/StylesV2/style.css" rel="stylesheet" />

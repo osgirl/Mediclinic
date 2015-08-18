@@ -24,22 +24,18 @@ public partial class LoginV2 : System.Web.UI.Page
         }
 
         // PC & Not FF => Message Suggesting To Use FF
-        recommendMozilla.Visible = !Utilities.IsMobileDevice(Request, false, false) && !Request.Browser.Type.ToLower().Contains("firefox");
+        //recommendMozilla.Visible = !Utilities.IsMobileDevice(Request, false, false) && !Request.Browser.Type.ToLower().Contains("firefox");
 
         bool showPageHeader = Request.QueryString["show_header"] == null || Request.QueryString["show_header"] == "1";
         if (!showPageHeader)
         {
             Utilities.UpdatePageHeaderV2(Page.Master, true);
-            beforeDevPanelSpace.Visible = false;
-            beforeButtonSpace.Visible   = false;
-            afterButtonSpace.Visible    = false;
-            recommendMozilla.Visible    = false;
+ 
         }
 
-        if (!Utilities.IsDev() && !IsPostBack)
-            this.DevPanel.Visible = false;
 
         Page.Form.DefaultFocus = UserName.ClientID;
+
 
     }
 
@@ -48,6 +44,7 @@ public partial class LoginV2 : System.Web.UI.Page
     {
         LogIn(UserName.Text, Password.Text);
     }
+
 
     protected void btnDevLogin_Click(object sender, EventArgs e)
     {
@@ -74,7 +71,6 @@ public partial class LoginV2 : System.Web.UI.Page
     {
         try
         {
-
             Session.Remove("DB");
             if (Convert.ToBoolean(ConfigurationManager.AppSettings["UseConfigDB"]))
             {
@@ -85,7 +81,7 @@ public partial class LoginV2 : System.Web.UI.Page
                 UserDatabaseMapper user = UserDatabaseMapperDB.GetByLogin(login);
                 if (user == null)
                 {
-                    this.FailureText.Text = "Login Failed.";
+                    this.FailureText.Text = "<div class=\"alert alert-danger\" runat=\"server\"><strong>Login Failed.</strong> Please ensure that your username and password are correct and try again.</div>";
                     return;
                 }
 
