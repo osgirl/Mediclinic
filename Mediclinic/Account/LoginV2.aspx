@@ -84,7 +84,7 @@
       </div>
       <asp:Button ID="LoginButton" runat="server" CommandName="Login" Text="LOGIN" onclick="LoginButton_Click" ValidationGroup="LoginUserValidationGroup" CssClass="btn btn-default navbar-btn" style="width:100%; background-color:#ff422e; color:#FFFFFF" />
         <p align="right"><a href="https://portal.mediclinic.com.au/Account/TermsAndConditionsV2.aspx" style="color:#ffffff; text-decoration:underline">Terms & Conditions Of Use Agreement</a></p>
-      <p align="right"><a href="javascript:__doPostBack('ctl00$MainContent$lnkLostPassword','')" style="color:#ffffff; text-decoration:underline">Forgot Password?</a></p>
+      <p align="right"><asp:LinkButton ID="lnkLostPassword" runat="server" OnClick="lnkLostPassword_Click" style="color:#ffffff; text-decoration:underline">Forgot your password?</asp:LinkButton></p>
     </div>
 </div>
 
