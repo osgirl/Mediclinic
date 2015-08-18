@@ -35,8 +35,12 @@ public partial class LoginV2 : System.Web.UI.Page
 
 
         Page.Form.DefaultFocus = UserName.ClientID;
-
-
+        System.Web.UI.HtmlControls.HtmlGenericControl currdiv = (System.Web.UI.HtmlControls.HtmlGenericControl)Master.FindControl("banner");
+        currdiv.Style.Add("display", "none");
+        System.Web.UI.HtmlControls.HtmlGenericControl nav = (System.Web.UI.HtmlControls.HtmlGenericControl)Master.FindControl("nav");
+        nav.Style.Add("display", "none");
+        System.Web.UI.HtmlControls.HtmlGenericControl footer = (System.Web.UI.HtmlControls.HtmlGenericControl)Master.FindControl("footer");
+        footer.Style.Add("display", "none");
     }
 
 
