@@ -30,9 +30,12 @@ public partial class LoginV2 : System.Web.UI.Page
         if (!showPageHeader)
         {
             Utilities.UpdatePageHeaderV2(Page.Master, true);
- 
         }
 
+        if (!Utilities.IsDev() && !IsPostBack)
+        {
+            this.DevPanel.Visible = false;
+        }
 
         Page.Form.DefaultFocus = UserName.ClientID;
         System.Web.UI.HtmlControls.HtmlGenericControl currdiv = (System.Web.UI.HtmlControls.HtmlGenericControl)Master.FindControl("banner");

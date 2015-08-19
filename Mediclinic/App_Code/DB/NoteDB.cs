@@ -121,7 +121,7 @@ public class NoteDB
                     deleted_by.bk_screen_show_key as deleted_by_bk_screen_show_key, 
                     deleted_by.enable_daily_reminder_sms   as deleted_by_enable_daily_reminder_sms, 
                     deleted_by.enable_daily_reminder_email as deleted_by_enable_daily_reminder_email,
-                    modified_by.hide_booking_notes as modified_by_hide_booking_notes,
+                    deleted_by.hide_booking_notes as deleted_by_hide_booking_notes,
 
 
                     " + PersonDB.GetFields("deleted_by_person_", "deleted_by_person") + @",

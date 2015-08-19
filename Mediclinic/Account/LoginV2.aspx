@@ -58,7 +58,7 @@
 <asp:Content ID="BodyContent" runat="server" ContentPlaceHolderID="MainContent">
 
 <div class="wrapper">
-    <asp:Panel ID="Panel1" runat="server" CssClass="nowrap" style="text-align:center;">
+    <asp:Panel ID="DevPanel" runat="server" CssClass="nowrap" style="text-align:center;">
         <asp:Button ID="Button1" runat="server" CommandArgument="Support1" CssClass="btn btn-primary" onclick="btnDevLogin_Click" Text="Support Login" />
     </asp:Panel>
     <p align="center"><img src="..\imagesV2\login-logo.png" alt="Logo" style="width: 70%"></p>

@@ -943,8 +943,9 @@ public partial class PatientDetailV2 : System.Web.UI.Page
                 bool canSeeInvoiceInfo = userView.IsAdminView || userView.IsPrincipal || (curBooking.Provider != null && curBooking.Provider.StaffID == loggedInStaffID && curBooking.DateStart > DateTime.Today.AddMonths(-2));
                 if (canSeeInvoiceInfo && Convert.ToInt32(tblBookingList.Rows[i]["booking_inv_count"]) > 0)
                 {
-                    string onclick = @"onclick=""javascript:open_new_tab('Invoice_ViewV2.aspx?booking_id=" + curBooking.BookingID + @"');return false;""";
-                    tblBookingList.Rows[i]["invoice_text"] = "<a " + onclick + " href=\"\">View<br/>Inv.</a>";
+                    string link = "Invoice_ViewV2.aspx?booking_id=" + curBooking.BookingID;
+                    string onclick = @"onclick=""javascript:open_new_tab('" + link + @"');return false;""";
+                    tblBookingList.Rows[i]["invoice_text"] = "<a " + onclick + " href=\"" + link + "\">View<br/>Inv.</a>";
 
                     if (!isDeleted)
                         hasInvoiceRows = true;
