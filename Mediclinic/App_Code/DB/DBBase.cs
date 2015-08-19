@@ -16,11 +16,11 @@ public class DBBase
             DB = System.Web.HttpContext.Current.Session["DB"].ToString();
 
         if (DB == "master"){
-            if (String.Equals("NIKKO-MEDICLINI", machinename) ==  true) return @"Server=(local);Database=master;Integrated Security=SSPI;";
+            if (String.Equals("NIKKO-MD", machinename) ==  true) return @"Server=(local);Database=master;Integrated Security=SSPI;";
             else return @"Server=.\SQLEXPRESS;Database=master;Integrated Security=SSPI;";
         }
         else{
-            if (String.Equals("NIKKO-MEDICLINI", machinename) == true) return @"Data Source=(local);Initial Catalog=" + DB + @";Integrated Security=True;MultipleActiveResultSets=True";
+            if (String.Equals("NIKKO-MD", machinename) == true) return @"Data Source=(local);Initial Catalog=" + DB + @";Integrated Security=True;MultipleActiveResultSets=True";
             else return @"Data Source=.\SQLEXPRESS;Initial Catalog=" + DB + @";Integrated Security=True;MultipleActiveResultSets=True";
         }
     }
