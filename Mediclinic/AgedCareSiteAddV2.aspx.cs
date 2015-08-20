@@ -1,5 +1,4 @@
-﻿// "test - Eli_______"
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -177,7 +176,7 @@ SET IDENTITY_INSERT Site OFF
     private void HideErrorMessage()
     {
         lblErrorMessage.Visible = false;
-        lblErrorMessage.Text = "XXXX";
+        lblErrorMessage.Text = "";
     }
 
     #endregion
