@@ -176,7 +176,7 @@ SET IDENTITY_INSERT Site OFF
     private void HideErrorMessage()
     {
         lblErrorMessage.Visible = false;
-        lblErrorMessage.Text = "";
+        lblErrorMessage.Text = "XXXX";
     }
 
     #endregion
